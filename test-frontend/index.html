@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>首页 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 首页（登录后的主页） -->
+    <div class="page home-page">
+        <!-- 顶部用户信息栏 -->
+        <div class="home-header">
+            <div class="user-info">
+                <div class="user-avatar">张</div>
+                <div class="user-details">
+                    <div class="user-name">张三</div>
+                    <div class="user-welcome">今天想吃点什么？</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">退出</button>
+        </div>
+
+        <!-- 功能按钮区 -->
+        <div class="home-content">
+            <div class="function-grid">
+                <!-- 开始点菜 -->
+                <div class="function-card primary-card" onclick="navigateTo('menu.html')">
+                    <div class="card-icon">🍽️</div>
+                    <div class="card-title">开始点菜</div>
+                    <div class="card-desc">浏览菜品并推送给好友</div>
+                </div>
+
+                <!-- 上传菜单 -->
+                <div class="function-card" onclick="navigateTo('upload.html')">
+                    <div class="card-icon">📤</div>
+                    <div class="card-title">上传菜单</div>
+                    <div class="card-desc">添加新菜品到列表</div>
+                </div>
+
+                <!-- 已推送菜单 -->
+                <div class="function-card" onclick="navigateTo('pushed.html')">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">已推送菜单</div>
+                    <div class="card-desc">查看推送历史</div>
+                </div>
+
+                <!-- 扫一扫 -->
+                <div class="function-card" onclick="navigateTo('scan.html')">
+                    <div class="card-icon">📷</div>
+                    <div class="card-title">扫一扫</div>
+                    <div class="card-desc">扫描好友二维码</div>
+                </div>
+
+                <!-- 添加好友 -->
+                <div class="function-card" onclick="navigateTo('qrcode.html')">
+                    <div class="card-icon">📱</div>
+                    <div class="card-title">添加好友</div>
+                    <div class="card-desc">显示我的二维码</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

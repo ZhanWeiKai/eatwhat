@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主色 -->
+    <color name="primary">#FF6600</color>
+    <color name="primary_dark">#E65C00</color>
+    <color name="primary_light">#FF8533</color>
+
+    <!-- 辅助色 -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- 背景色 -->
+    <color name="background">#F5F5F5</color>
+    <color name="surface">#FFFFFF</color>
+
+    <!-- 文字颜色 -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#999999</color>
+    <color name="text_hint">#CCCCCC</color>
+
+    <!-- 功能色 -->
+    <color name="error">#F5222D</color>
+    <color name="success">#52C41A</color>
+    <color name="warning">#FAAD14</color>
+    <color name="info">#1890FF</color>
+
+    <!-- 购物车背景 -->
+    <color name="cart_bg">#1E293B</color>
+</resources>

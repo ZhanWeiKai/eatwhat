@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>上传菜单 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 上传菜单页面 -->
+    <div class="page upload-page">
+        <!-- 顶部导航栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">上传菜单</h1>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- 上传表单 -->
+        <div class="upload-form">
+            <!-- 图片上传区 -->
+            <div class="upload-section">
+                <label class="upload-label">菜品图片</label>
+                <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('imageInput').click()">
+                    <div class="upload-placeholder">
+                        <div class="upload-icon">📷</div>
+                        <p>点击拍照或从相册选择</p>
+                    </div>
+                    <img id="imagePreview" class="image-preview" style="display: none;">
+                </div>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+            </div>
+
+            <!-- 菜品名称 -->
+            <div class="upload-section">
+                <label class="upload-label">菜品名称 <span class="required">*</span></label>
+                <input type="text" class="input-field" id="dishName" placeholder="请输入菜品名称（最多20字）" maxlength="20">
+            </div>
+
+            <!-- 菜品描述 -->
+            <div class="upload-section">
+                <label class="upload-label">菜品描述</label>
+                <textarea class="textarea-field" id="dishDesc" placeholder="描述菜品特色、口味等（选填，最多100字）" maxlength="100"></textarea>
+            </div>
+
+            <!-- 价格 -->
+            <div class="upload-section">
+                <label class="upload-label">价格 <span class="required">*</span></label>
+                <div class="price-input-wrapper">
+                    <span class="currency-symbol">¥</span>
+                    <input type="number" class="input-field price-input" id="dishPrice" placeholder="0" min="0" step="1">
+                </div>
+            </div>
+
+            <!-- 分类选择 -->
+            <div class="upload-section">
+                <label class="upload-label">分类 <span class="required">*</span></label>
+                <select class="input-field" id="dishCategory">
+                    <option value="">请选择分类</option>
+                    <option value="hot">热菜</option>
+                    <option value="cold">凉菜</option>
+                    <option value="staple">主食</option>
+                    <option value="noodle">面食</option>
+                    <option value="soup">汤品</option>
+                    <option value="dessert">甜点</option>
+                    <option value="drink">饮品</option>
+                </select>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="button-group-vertical">
+                <button class="btn btn-primary btn-block" onclick="submitDish()">
+                    ✅ 提交
+                </button>
+                <button class="btn btn-secondary btn-block" onclick="navigateTo('index.html')">
+                    ❌ 取消
+                </button>
+            </div>
+        </div>
+
+        <!-- 已上传菜品示例 -->
+        <div class="uploaded-dishes-section">
+            <div class="section-title">已上传菜品示例</div>
+            <div class="dishes-grid">
+                <div class="dish-example-card">
+                    <img src="https://loremflickr.com/160/160/kungpao,chicken" alt="宫保鸡丁" class="dish-example-img">
+                    <div class="dish-example-name">宫保鸡丁</div>
+                    <div class="dish-example-price">¥38</div>
+                </div>
+                <div class="dish-example-card">
+                    <img src="https://loremflickr.com/160/160/mapo,tofu" alt="麻婆豆腐" class="dish-example-img">
+                    <div class="dish-example-name">麻婆豆腐</div>
+                    <div class="dish-example-price">¥28</div>
+                </div>
+                <div class="dish-example-card">
+                    <img src="https://loremflickr.com/160/160/braised,pork" alt="红烧肉" class="dish-example-img">
+                    <div class="dish-example-name">红烧肉</div>
+                    <div class="dish-example-price">¥45</div>
+                </div>
+                <div class="dish-example-card">
+                    <img src="https://loremflickr.com/160/160/yuxiang,pork" alt="鱼香肉丝" class="dish-example-img">
+                    <div class="dish-example-name">鱼香肉丝</div>
+                    <div class="dish-example-price">¥35</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成功提示弹窗 -->
+        <div class="modal" id="successModal">
+            <div class="modal-content modal-small">
+                <div class="modal-body">
+                    <div class="success-icon">✓</div>
+                    <h2>上传成功！</h2>
+                    <p>您的菜品已添加到菜单列表</p>
+                    <button class="btn btn-primary btn-block" onclick="navigateTo('index.html')">
+                        返回首页
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

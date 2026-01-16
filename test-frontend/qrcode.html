@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的二维码 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 我的二维码页面 -->
+    <div class="page qrcode-page">
+        <!-- 顶部标题栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">我的二维码</h1>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- 二维码展示区 -->
+        <div class="qrcode-container">
+            <!-- 用户信息 -->
+            <div class="qrcode-user-info">
+                <div class="qrcode-avatar">张</div>
+                <div class="qrcode-username">张三</div>
+            </div>
+
+            <!-- 二维码图片 -->
+            <div class="qrcode-wrapper">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=USER_123_ZHANG_SAN" alt="我的二维码" class="qrcode-image">
+            </div>
+
+            <!-- 提示文字 -->
+            <div class="qrcode-tip">
+                <p class="tip-title">让好友扫描二维码</p>
+                <p class="tip-desc">即可添加你为好友</p>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="qrcode-actions">
+                <button class="qrcode-btn primary-btn" onclick="shareQRCode()">
+                    <span class="btn-icon">📤</span>
+                    分享给好友
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

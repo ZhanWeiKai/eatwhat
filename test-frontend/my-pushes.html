@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的推送 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 我的推送页面 -->
+    <div class="page my-pushes-page">
+        <!-- 顶部导航栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">我的推送</h1>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- 菜品列表（全部可删除） -->
+        <div class="dish-list" id="myDishList">
+            <!-- 示例：我的推送 -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 今天 12:05</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=麻婆豆腐" alt="麻婆豆腐" class="dish-image">
+                    <h3 class="dish-name">麻婆豆腐</h3>
+                    <p class="dish-desc">"这家店的麻婆豆腐超级正宗，强烈推荐！"</p>
+                </div>
+            </div>
+
+            <!-- 示例：我的推送 -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 今天 11:58</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=红烧肉" alt="红烧肉" class="dish-image">
+                    <h3 class="dish-name">红烧肉</h3>
+                    <p class="dish-desc">"肥而不腻，入口即化"</p>
+                </div>
+            </div>
+
+            <!-- 示例：我的推送 -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 昨天 18:30</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=鱼香肉丝" alt="鱼香肉丝" class="dish-image">
+                    <h3 class="dish-name">鱼香肉丝</h3>
+                    <p class="dish-desc">"酸甜可口，非常下饭"</p>
+                </div>
+            </div>
+
+            <!-- 示例：我的推送 -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 昨天 12:15</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=宫保鸡丁" alt="宫保鸡丁" class="dish-image">
+                    <h3 class="dish-name">宫保鸡丁</h3>
+                    <p class="dish-desc">"川菜经典，鸡肉鲜嫩，花生酥脆"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 空状态（默认隐藏） -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">🍽️</div>
+            <h2>还没有推送过菜品</h2>
+            <p>快去推荐你喜欢的菜品吧～</p>
+            <button class="btn btn-primary" onclick="navigateTo('space.html')">开始讨论</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

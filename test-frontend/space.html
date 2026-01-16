@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>讨论空间 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 讨论空间页面 -->
+    <div class="page space-page">
+        <!-- 顶部导航栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">今天午餐讨论</h1>
+            <button class="invite-btn" onclick="showInviteModal()">📧</button>
+        </div>
+
+        <!-- 空间信息栏 -->
+        <div class="space-info">
+            <div class="member-avatars">
+                <div class="avatar" title="张三">👤</div>
+                <div class="avatar" title="李四">👤</div>
+                <div class="avatar" title="王五">👤</div>
+                <div class="avatar" title="赵六">👤</div>
+                <div class="avatar-more">+2</div>
+            </div>
+            <span class="member-count">5人参与</span>
+        </div>
+
+        <!-- 菜品推送列表 -->
+        <div class="dish-list" id="dishList">
+            <!-- 示例：自己的推送（可删除） -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 5分钟前</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=麻婆豆腐" alt="麻婆豆腐" class="dish-image">
+                    <h3 class="dish-name">麻婆豆腐</h3>
+                    <p class="dish-desc">"这家店的麻婆豆腐超级正宗，强烈推荐！"</p>
+                </div>
+            </div>
+
+            <!-- 示例：他人的推送（不可删除） -->
+            <div class="dish-card" data-owner="other">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">李</div>
+                        <span class="pusher-name">李四</span>
+                        <span class="push-time">· 10分钟前</span>
+                    </div>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=宫保鸡丁" alt="宫保鸡丁" class="dish-image">
+                    <h3 class="dish-name">宫保鸡丁</h3>
+                    <p class="dish-desc">"川菜经典，鸡肉鲜嫩，花生酥脆"</p>
+                </div>
+            </div>
+
+            <!-- 示例：自己的推送（可删除） -->
+            <div class="dish-card" data-owner="self">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">我</div>
+                        <span class="pusher-name">张三</span>
+                        <span class="push-time">· 15分钟前</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteDish(this)">🗑️</button>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=红烧肉" alt="红烧肉" class="dish-image">
+                    <h3 class="dish-name">红烧肉</h3>
+                    <p class="dish-desc">"肥而不腻，入口即化"</p>
+                </div>
+            </div>
+
+            <!-- 示例：他人的推送（不可删除） -->
+            <div class="dish-card" data-owner="other">
+                <div class="dish-header">
+                    <div class="pusher-info">
+                        <div class="avatar-small">王</div>
+                        <span class="pusher-name">王五</span>
+                        <span class="push-time">· 20分钟前</span>
+                    </div>
+                </div>
+                <div class="dish-content">
+                    <img src="https://via.placeholder.com/400x300/FF6600/FFFFFF?text=鱼香肉丝" alt="鱼香肉丝" class="dish-image">
+                    <h3 class="dish-name">鱼香肉丝</h3>
+                    <p class="dish-desc">"酸甜可口，非常下饭"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部上传按钮 -->
+        <button class="fab-btn" onclick="navigateTo('upload.html')">+</button>
+
+        <!-- 邀请好友弹窗 -->
+        <div class="modal" id="inviteModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>邀请好友加入讨论</h2>
+                    <button class="close-btn" onclick="closeModal('inviteModal')">×</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-desc">让好友扫描二维码，即可一起参与讨论</p>
+                    <div class="qrcode">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TodayEatSpace-123456" alt="二维码">
+                    </div>
+                    <p class="space-info-text">空间：今天午餐讨论</p>
+                    <p class="inviter-text">邀请人：张三</p>
+                    <button class="btn btn-primary" onclick="shareInviteLink()">分享邀请链接</button>
+                    <p class="validity-text">二维码长期有效，可随时分享给好友</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

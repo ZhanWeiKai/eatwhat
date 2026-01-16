@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>已推送菜单 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 已推送菜单页面 -->
+    <div class="page pushed-page">
+        <!-- 顶部标题栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">已推送菜单</h1>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- 推送列表 -->
+        <div class="pushed-list">
+            <!-- 推送记录1 - 自己的推送（可删除） -->
+            <div class="pushed-card" data-owner="self">
+                <div class="pushed-header">
+                    <div class="pusher-info">
+                        <div class="pusher-avatar">我</div>
+                        <span class="pusher-name">张三推送</span>
+                        <span class="push-time">· 5分钟前</span>
+                    </div>
+                    <button class="delete-btn" onclick="deletePush(this)">🗑️</button>
+                </div>
+                <div class="pushed-content">
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/mapo,tofu" alt="麻婆豆腐" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">麻婆豆腐</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥28</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/kungpao,chicken" alt="宫保鸡丁" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">宫保鸡丁</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥38</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/braised,pork" alt="红烧肉" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">红烧肉</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pushed-footer">
+                    <span class="pushed-total">总计：¥111</span>
+                </div>
+            </div>
+
+            <!-- 推送记录2 - 他人的推送（不可删除） -->
+            <div class="pushed-card" data-owner="other">
+                <div class="pushed-header">
+                    <div class="pusher-info">
+                        <div class="pusher-avatar">李</div>
+                        <span class="pusher-name">李四推送</span>
+                        <span class="push-time">· 10分钟前</span>
+                    </div>
+                </div>
+                <div class="pushed-content">
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/yuxiang,pork" alt="鱼香肉丝" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">鱼香肉丝</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥35</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/pepper,steak" alt="青椒肉丝" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">青椒肉丝</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥32</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pushed-footer">
+                    <span class="pushed-total">总计：¥67</span>
+                </div>
+            </div>
+
+            <!-- 推送记录3 - 自己的推送（可删除） -->
+            <div class="pushed-card" data-owner="self">
+                <div class="pushed-header">
+                    <div class="pusher-info">
+                        <div class="pusher-avatar">我</div>
+                        <span class="pusher-name">张三推送</span>
+                        <span class="push-time">· 昨天 18:30</span>
+                    </div>
+                    <button class="delete-btn" onclick="deletePush(this)">🗑️</button>
+                </div>
+                <div class="pushed-content">
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/boiled,fish" alt="水煮鱼" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">水煮鱼</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥58</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pushed-footer">
+                    <span class="pushed-total">总计：¥58</span>
+                </div>
+            </div>
+
+            <!-- 推送记录4 - 他人的推送（不可删除） -->
+            <div class="pushed-card" data-owner="other">
+                <div class="pushed-header">
+                    <div class="pusher-info">
+                        <div class="pusher-avatar">王</div>
+                        <span class="pusher-name">王五推送</span>
+                        <span class="push-time">· 昨天 12:15</span>
+                    </div>
+                </div>
+                <div class="pushed-content">
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/dongpo,pork" alt="东坡肉" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">东坡肉</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x2</span>
+                                <span class="pushed-dish-price">¥68</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pushed-dish-with-img">
+                        <img src="https://loremflickr.com/80/80/west,lake,fish" alt="西湖醋鱼" class="pushed-dish-img">
+                        <div class="pushed-dish-info">
+                            <div class="pushed-dish-name">西湖醋鱼</div>
+                            <div class="pushed-dish-detail">
+                                <span class="pushed-dish-qty">x1</span>
+                                <span class="pushed-dish-price">¥48</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pushed-footer">
+                    <span class="pushed-total">总计：¥116</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

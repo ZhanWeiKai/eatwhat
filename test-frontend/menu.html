@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>在线点餐 - 今天吃什么</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 点菜页面 -->
+    <div class="page menu-page">
+        <!-- 顶部标题栏 -->
+        <div class="header">
+            <button class="back-btn" onclick="navigateTo('index.html')">←</button>
+            <h1 class="header-title">在线点餐</h1>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- 左侧分类导航 -->
+        <div class="menu-container">
+            <div class="category-nav">
+                <div class="category-item active" data-category="hot" onclick="selectCategory('hot')">
+                    <span class="category-icon">🔥</span>
+                    <span class="category-name">热菜</span>
+                </div>
+                <div class="category-item" data-category="cold" onclick="selectCategory('cold')">
+                    <span class="category-icon">🥗</span>
+                    <span class="category-name">凉菜</span>
+                </div>
+                <div class="category-item" data-category="staple" onclick="selectCategory('staple')">
+                    <span class="category-icon">🍚</span>
+                    <span class="category-name">主食</span>
+                </div>
+                <div class="category-item" data-category="noodle" onclick="selectCategory('noodle')">
+                    <span class="category-icon">🍜</span>
+                    <span class="category-name">面食</span>
+                </div>
+                <div class="category-item" data-category="soup" onclick="selectCategory('soup')">
+                    <span class="category-icon">🥄</span>
+                    <span class="category-name">汤品</span>
+                </div>
+                <div class="category-item" data-category="dessert" onclick="selectCategory('dessert')">
+                    <span class="category-icon">🍰</span>
+                    <span class="category-name">甜点</span>
+                </div>
+                <div class="category-item" data-category="drink" onclick="selectCategory('drink')">
+                    <span class="category-icon">🥤</span>
+                    <span class="category-name">饮品</span>
+                </div>
+            </div>
+
+            <!-- 右侧菜品列表 -->
+            <div class="dish-list-container">
+                <div class="category-title">热菜</div>
+
+                <!-- 菜品列表 -->
+                <div class="dish-list-scroll" id="dishList">
+                    <!-- 菜品1 -->
+                    <div class="dish-item">
+                        <img src="https://loremflickr.com/100/100/kungpao,chicken" alt="宫保鸡丁" class="dish-thumb">
+                        <div class="dish-info">
+                            <div class="dish-name">宫保鸡丁</div>
+                            <div class="dish-desc">川菜经典，鸡肉鲜嫩，花生酥脆，口味香辣</div>
+                            <div class="dish-price-row">
+                                <span class="dish-price">¥38</span>
+                                <button class="add-btn" onclick="addToCart('宫保鸡丁', 38, 'https://loremflickr.com/100/100/kungpao,chicken')">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 菜品2 -->
+                    <div class="dish-item">
+                        <img src="https://loremflickr.com/100/100/yuxiang,pork" alt="鱼香肉丝" class="dish-thumb">
+                        <div class="dish-info">
+                            <div class="dish-name">鱼香肉丝</div>
+                            <div class="dish-desc">酸甜可口，肉丝嫩滑，配菜丰富</div>
+                            <div class="dish-price-row">
+                                <span class="dish-price">¥35</span>
+                                <button class="add-btn" onclick="addToCart('鱼香肉丝', 35, 'https://loremflickr.com/100/100/yuxiang,pork')">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 菜品3 -->
+                    <div class="dish-item">
+                        <img src="https://loremflickr.com/100/100/braised,pork" alt="红烧肉" class="dish-thumb">
+                        <div class="dish-info">
+                            <div class="dish-name">红烧肉</div>
+                            <div class="dish-desc">肥而不腻，入口即化，传统名菜</div>
+                            <div class="dish-price-row">
+                                <span class="dish-price">¥45</span>
+                                <button class="add-btn" onclick="addToCart('红烧肉', 45, 'https://loremflickr.com/100/100/braised,pork')">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 菜品4 -->
+                    <div class="dish-item">
+                        <img src="https://loremflickr.com/100/100/mapo,tofu" alt="麻婆豆腐" class="dish-thumb">
+                        <div class="dish-info">
+                            <div class="dish-name">麻婆豆腐</div>
+                            <div class="dish-desc">麻辣鲜香，豆腐嫩滑，下饭神器</div>
+                            <div class="dish-price-row">
+                                <span class="dish-price">¥28</span>
+                                <button class="add-btn" onclick="addToCart('麻婆豆腐', 28, 'https://loremflickr.com/100/100/mapo,tofu')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部购物车栏 -->
+        <div class="cart-bar" id="cartBar">
+            <div class="cart-info" onclick="toggleCart()">
+                <div class="cart-icon-wrapper">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </div>
+                <div class="cart-text">
+                    <div class="cart-count-text">共<span id="cartItemCount">0</span>件</div>
+                    <div class="cart-total">¥<span id="cartTotal">0</span></div>
+                </div>
+            </div>
+            <button class="view-cart-btn" onclick="toggleCart()">查看购物车</button>
+        </div>
+
+        <!-- 购物车面板 -->
+        <div class="cart-panel" id="cartPanel">
+            <div class="cart-panel-header">
+                <span class="cart-panel-title">购物车</span>
+                <button class="close-cart-btn" onclick="toggleCart()">收起</button>
+            </div>
+
+            <div class="cart-items" id="cartItems">
+                <!-- 购物车为空 -->
+                <div class="cart-empty" id="cartEmpty">
+                    <div class="empty-icon">🛒</div>
+                    <p>购物车是空的</p>
+                    <p>快去添加菜品吧～</p>
+                </div>
+            </div>
+
+            <div class="cart-panel-footer">
+                <div class="cart-summary">
+                    <span>共<span id="panelItemCount">0</span>件</span>
+                    <span class="cart-summary-total">合计: ¥<span id="panelTotal">0</span></span>
+                </div>
+                <button class="push-btn" onclick="pushMenu()">
+                    ✈️ 推送菜单
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
