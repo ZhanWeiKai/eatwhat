@@ -2,12 +2,16 @@ package com.what2eat.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户注册请求
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegisterRequest {
 
     @NotBlank(message = "用户名不能为空")

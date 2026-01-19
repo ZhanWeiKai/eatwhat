@@ -1,6 +1,7 @@
 package com.what2eat.service;
 
 import com.what2eat.entity.Push;
+import com.what2eat.repository.FriendshipRepository;
 import com.what2eat.repository.PushRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 推送服务
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class PushService {
 
     private final PushRepository pushRepository;
+    private final FriendshipRepository friendshipRepository;
     private final SimpMessagingTemplate messagingTemplate;
 
     /**
@@ -26,6 +29,25 @@ public class PushService {
      */
     public List<Push> getAllPushes() {
         return pushRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    /**
+     * 获取用户好友的推送记录
+     */
+    public List<Push> getPushesForUser(String userId) {
+        // 获取用户的所有好友关系
+        List<com.what2eat.entity.Friendship> friendships = friendshipRepository.findByUserId(userId);
+
+        // 收集所有好友的ID（包括自己，因为也能看到自己的推送）
+        List<String> friendIds = friendships.stream()
+                .map(f -> f.getFriendId())
+                .collect(Collectors.toList());
+
+        // 添加自己，这样也能看到自己推送的菜单
+        friendIds.add(userId);
+
+        // 查询这些好友的推送记录
+        return pushRepository.findByPusherIdInOrderByCreatedAtDesc(friendIds);
     }
 
     /**

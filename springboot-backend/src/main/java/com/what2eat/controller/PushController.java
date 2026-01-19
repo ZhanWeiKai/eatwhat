@@ -2,6 +2,7 @@ package com.what2eat.controller;
 
 import com.what2eat.dto.response.ApiResponse;
 import com.what2eat.entity.Push;
+import com.what2eat.entity.User;
 import com.what2eat.service.PushService;
 import com.what2eat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,13 +25,17 @@ public class PushController {
     private final UserService userService;
 
     /**
-     * 获取所有推送记录
+     * 获取所有推送记录（只显示好友的推送）
      */
     @Operation(summary = "获取所有推送记录")
     @GetMapping("/list")
-    public ApiResponse<List<Push>> getAllPushes() {
+    public ApiResponse<List<Push>> getAllPushes(@RequestHeader("Authorization") String authorization) {
         try {
-            return ApiResponse.success(pushService.getAllPushes());
+            String token = authorization.replace("Bearer ", "");
+            String userId = userService.validateTokenAndGetUser(token).getUserId();
+
+            // 只返回好友的推送
+            return ApiResponse.success(pushService.getPushesForUser(userId));
         } catch (Exception e) {
             return ApiResponse.error(e.getMessage());
         }

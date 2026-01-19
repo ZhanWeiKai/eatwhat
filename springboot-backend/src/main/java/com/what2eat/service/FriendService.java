@@ -35,8 +35,9 @@ public class FriendService {
         // 验证用户是否存在
         userService.getUserById(friendId);
 
-        // 检查是否已经是好友
-        if (friendshipRepository.existsByUserIdAndFriendId(userId, friendId)) {
+        // 检查是否已经是好友（双向检查）
+        if (friendshipRepository.existsByUserIdAndFriendId(userId, friendId) ||
+            friendshipRepository.existsByUserIdAndFriendId(friendId, userId)) {
             throw new RuntimeException("已经是好友了");
         }
 
@@ -45,13 +46,21 @@ public class FriendService {
             throw new RuntimeException("不能添加自己为好友");
         }
 
-        // 创建好友关系（单向）
-        Friendship friendship = new Friendship();
-        friendship.setId(UUID.randomUUID().toString());
-        friendship.setUserId(userId);
-        friendship.setFriendId(friendId);
+        // 创建好友关系（双向）
+        Friendship friendship1 = new Friendship();
+        friendship1.setId(UUID.randomUUID().toString());
+        friendship1.setUserId(userId);
+        friendship1.setFriendId(friendId);
 
-        return friendshipRepository.save(friendship);
+        Friendship friendship2 = new Friendship();
+        friendship2.setId(UUID.randomUUID().toString());
+        friendship2.setUserId(friendId);
+        friendship2.setFriendId(userId);
+
+        friendshipRepository.save(friendship1);
+        friendshipRepository.save(friendship2);
+
+        return friendship1;
     }
 
     /**
