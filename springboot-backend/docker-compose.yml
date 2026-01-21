@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # MySQL数据库
+  mysql:
+    image: mysql:8.0
+    container_name: what2eat-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: what2eat
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      # 数据持久化
+      - mysql-data:/var/lib/mysql
+      # 初始化SQL脚本
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    networks:
+      - what2eat-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456"]
+      timeout: 20s
+      retries: 10
+
+  # Spring Boot应用
+  app:
+    # 使用官方OpenJDK 17镜像
+    image: eclipse-temurin:17-jre-alpine
+    container_name: what2eat-app
+    restart: always
+    working_dir: /app
+    environment:
+      # 数据库连接配置（连接到MySQL容器）
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/what2eat?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    ports:
+      - "8883:8883"
+    volumes:
+      # 挂载jar包
+      - ./target/what2eat-backend-1.0.0.jar:/app/app.jar
+      # 挂载上传文件目录
+      - ./uploads:/app/uploads
+    networks:
+      - what2eat-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: ["java", "-jar", "app.jar"]
+
+# 数据卷
+volumes:
+  mysql-data:
+    driver: local
+
+# 网络
+networks:
+  what2eat-network:
+    driver: bridge

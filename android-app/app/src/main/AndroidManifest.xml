@@ -13,14 +13,32 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
+    <!-- 通知权限（Android 13+） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- 振动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 前台服务权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/sym_def_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@android:drawable/sym_def_app_icon"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.What2Eat">
+
+        <!-- WebSocket前台服务 -->
+        <service
+            android:name=".service.WebSocketService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <!-- 启动页（登录/注册） -->
         <activity
@@ -46,6 +64,17 @@
         <!-- 推送记录页面 -->
         <activity
             android:name=".ui.push.PushListActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+
+        <!-- 好友列表页面 -->
+        <activity
+            android:name=".ui.friend.FriendListActivity"
+            android:exported="false" />
+
+        <!-- 分类管理页面 -->
+        <activity
+            android:name=".ui.category.CategoryManageActivity"
             android:exported="false" />
 
         <!-- 二维码页面 -->

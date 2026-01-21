@@ -26,4 +26,7 @@
 
     <!-- 购物车背景 -->
     <color name="cart_bg">#1E293B</color>
+    <color name="cart_background">#1E293B</color>
+    <color name="accent">#FF8533</color>
+    <color name="delete">#F5222D</color>
 </resources>

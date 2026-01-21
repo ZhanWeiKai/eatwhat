@@ -66,7 +66,7 @@ public class PushService {
     }
 
     /**
-     * 创建推送
+     * 创建推送并发送给所有好友（双向好友关系）
      */
     @Transactional
     public Push createPush(Push push, String pusherId) {
@@ -79,11 +79,47 @@ public class PushService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         push.setTotalAmount(totalAmount);
 
+        // 保存推送记录
         Push savedPush = pushRepository.save(push);
 
-        // 通过WebSocket推送给所有客户端
-        messagingTemplate.convertAndSend("/topic/push", savedPush);
+        // 查询双向好友关系：
+        // 1. 我关注的人（我扫他们的二维码）
+        List<com.what2eat.entity.Friendship> iFollow = friendshipRepository.findByUserId(pusherId);
+        // 2. 关注我的人（他们扫我的二维码）
+        List<com.what2eat.entity.Friendship> followMe = friendshipRepository.findByFriendId(pusherId);
 
+        // 合并好友ID列表（去重）
+        java.util.Set<String> friendIdSet = new java.util.HashSet<>();
+        for (com.what2eat.entity.Friendship f : iFollow) {
+            friendIdSet.add(f.getFriendId());
+        }
+        for (com.what2eat.entity.Friendship f : followMe) {
+            friendIdSet.add(f.getUserId());
+        }
+
+        // 排除推送者自己（不要给自己发推送）
+        friendIdSet.remove(pusherId);
+
+        List<String> friendIds = new java.util.ArrayList<>(friendIdSet);
+
+        // 遍历所有好友，通过WebSocket推送给每个在线好友
+        int successCount = 0;
+        for (String friendId : friendIds) {
+            try {
+                // 推送到该好友的用户专属频道
+                messagingTemplate.convertAndSend(
+                    "/topic/user/" + friendId,
+                    savedPush
+                );
+                successCount++;
+                System.out.println("推送消息已发送给用户: " + friendId);
+            } catch (Exception e) {
+                // 某个好友推送失败不影响其他好友
+                System.err.println("推送消息给用户 " + friendId + " 失败: " + e.getMessage());
+            }
+        }
+
+        System.out.println("推送消息已发送给 " + successCount + "/" + friendIds.size() + " 个好友");
         return savedPush;
     }
 

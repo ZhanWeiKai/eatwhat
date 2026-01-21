@@ -4,11 +4,13 @@ import com.what2eat.dto.request.LoginRequest;
 import com.what2eat.dto.request.RegisterRequest;
 import com.what2eat.dto.response.ApiResponse;
 import com.what2eat.entity.User;
+import com.what2eat.repository.UserRepository;
 import com.what2eat.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,6 +26,8 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
     /**
      * 用户注册
@@ -62,6 +66,17 @@ public class AuthController {
             String token = userService.login(request);
             User user = userService.validateTokenAndGetUser(token);
 
+            // 设置用户为在线状态
+            user.setOnlineStatus(1);
+            userRepository.save(user);
+
+            // 广播用户状态变化
+            Map<String, Object> statusMessage = new HashMap<>();
+            statusMessage.put("userId", user.getUserId());
+            statusMessage.put("nickname", user.getNickname());
+            statusMessage.put("status", 1);  // 1=在线
+            messagingTemplate.convertAndSend("/topic/user-status", statusMessage);
+
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
             data.put("userId", user.getUserId());
@@ -95,8 +110,29 @@ public class AuthController {
      */
     @Operation(summary = "退出登录")
     @PostMapping("/logout")
-    public ApiResponse<Void> logout() {
-        // JWT是无状态的，客户端删除token即可
-        return ApiResponse.success("退出成功", null);
+    public ApiResponse<Void> logout(@RequestHeader(value = "Authorization", required = false) String authorization) {
+        try {
+            // 如果提供了token，则更新用户状态
+            if (authorization != null && !authorization.isEmpty()) {
+                String token = authorization.replace("Bearer ", "");
+                User user = userService.validateTokenAndGetUser(token);
+
+                // 设置用户为离线状态
+                user.setOnlineStatus(0);
+                userRepository.save(user);
+
+                // 广播用户状态变化
+                Map<String, Object> statusMessage = new HashMap<>();
+                statusMessage.put("userId", user.getUserId());
+                statusMessage.put("nickname", user.getNickname());
+                statusMessage.put("status", 0);  // 0=离线
+                messagingTemplate.convertAndSend("/topic/user-status", statusMessage);
+            }
+
+            return ApiResponse.success("退出成功", null);
+        } catch (RuntimeException e) {
+            // 即使token无效，也返回成功（客户端删除token即可）
+            return ApiResponse.success("退出成功", null);
+        }
     }
 }

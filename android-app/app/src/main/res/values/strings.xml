@@ -21,6 +21,7 @@
     <string name="my_pushes">已推送菜单</string>
     <string name="scan_qr">扫一扫</string>
     <string name="my_qr">我的二维码</string>
+    <string name="my_friends">我的好友</string>
 
     <!-- 点菜 -->
     <string name="hot_dish">热菜</string>

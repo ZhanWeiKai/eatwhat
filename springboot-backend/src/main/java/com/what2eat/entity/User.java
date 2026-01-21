@@ -35,6 +35,9 @@ public class User {
     @Column(length = 255)
     private String avatar;
 
+    @Column(name = "online_status", columnDefinition = "INT DEFAULT 0")
+    private Integer onlineStatus = 0;  // 0=离线, 1=在线
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -44,12 +47,34 @@ public class User {
     private LocalDateTime updatedAt;
 
     /**
-     * 默认头像
+     * 默认头像（使用配置的域名）
      */
     @Transient
-    private static final String DEFAULT_AVATAR = "http://localhost:8883/api/static/default-avatar.png";
+    private String getDefaultAvatar() {
+        // 从系统属性或默认值获取base URL
+        String baseUrl = System.getProperty("file.base-url", "http://api.jamesweb.org:8883/api");
+        return baseUrl + "/static/default-avatar.png";
+    }
+
+    /**
+     * 判断用户是否在线
+     */
+    @Transient
+    public boolean isOnline() {
+        return onlineStatus != null && onlineStatus == 1;
+    }
 
     public String getAvatar() {
-        return avatar != null ? avatar : DEFAULT_AVATAR;
+        if (avatar != null && !avatar.isEmpty()) {
+            // 如果头像URL是localhost开头，替换为域名
+            if (avatar.contains("localhost:8883")) {
+                return avatar.replace("http://localhost:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            if (avatar.contains("10.88.1.127:8883")) {
+                return avatar.replace("http://10.88.1.127:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            return avatar;
+        }
+        return getDefaultAvatar();
     }
 }

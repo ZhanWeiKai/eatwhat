@@ -2,18 +2,24 @@ package com.what2eat.ui.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.what2eat.R;
 import com.what2eat.data.api.ApiService;
 import com.what2eat.data.model.ApiResponse;
+import com.what2eat.service.WebSocketService;
 import com.what2eat.ui.main.MainActivity;
 import com.what2eat.utils.RetrofitClient;
 
@@ -29,16 +35,18 @@ import retrofit2.Response;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1001;
+
     private LinearLayout loginForm;
     private LinearLayout registerForm;
     private Button btnLoginTab;
     private Button btnRegisterTab;
-    private TextInputEditText etUsername;
-    private TextInputEditText etPassword;
-    private TextInputEditText etRegUsername;
-    private TextInputEditText etRegNickname;
-    private TextInputEditText etRegPassword;
-    private TextInputEditText etRegConfirmPassword;
+    private EditText etUsername;
+    private EditText etPassword;
+    private EditText etRegUsername;
+    private EditText etRegNickname;
+    private EditText etRegPassword;
+    private EditText etRegConfirmPassword;
     private Button btnLogin;
     private Button btnRegister;
 
@@ -51,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 检查是否已登录
         if (RetrofitClient.isLoggedIn(this)) {
+            requestNotificationPermissionAndStartService();
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
@@ -58,6 +67,60 @@ public class LoginActivity extends AppCompatActivity {
 
         initViews();
         setListeners();
+    }
+
+    /**
+     * 请求通知权限并启动WebSocket服务
+     */
+    private void requestNotificationPermissionAndStartService() {
+        // Android 13+ 需要请求通知权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // 未授权，请求权限
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_REQUEST_CODE);
+            } else {
+                // 已授权，启动服务
+                startWebSocketService();
+            }
+        } else {
+            // Android 13以下不需要请求权限
+            startWebSocketService();
+        }
+    }
+
+    /**
+     * 启动WebSocket前台服务
+     * 如果服务已在运行，先停止再启动，确保用最新的userId重新连接
+     */
+    private void startWebSocketService() {
+        Intent serviceIntent = new Intent(this, WebSocketService.class);
+        // 先停止旧服务（如果存在），确保用新的userId重新连接
+        stopService(serviceIntent);
+
+        // 启动新服务
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 权限已授予，启动服务
+                startWebSocketService();
+            } else {
+                // 权限被拒绝，仍然启动服务（但无法显示通知）
+                startWebSocketService();
+                Toast.makeText(this, "通知权限被拒绝，无法接收推送通知", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initViews() {
@@ -142,6 +205,9 @@ public class LoginActivity extends AppCompatActivity {
                     RetrofitClient.saveUserInfo(LoginActivity.this, userId, username, nickname);
 
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+
+                    // 请求通知权限并启动WebSocket服务
+                    requestNotificationPermissionAndStartService();
 
                     // 跳转到主页
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

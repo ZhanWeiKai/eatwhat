@@ -2,6 +2,8 @@ package com.what2eat.data.api;
 
 import com.what2eat.data.model.ApiResponse;
 import com.what2eat.data.model.Dish;
+import com.what2eat.data.model.DishCategory;
+import com.what2eat.data.model.FriendDTO;
 import com.what2eat.data.model.Push;
 import com.what2eat.data.model.User;
 
@@ -39,6 +41,20 @@ public interface ApiService {
     @POST("dishes")
     Call<ApiResponse<Dish>> createDish(@Header("Authorization") String token, @Body Dish dish);
 
+    // ========== 分类接口 ==========
+
+    @GET("categories")
+    Call<ApiResponse<List<DishCategory>>> getAllCategories();
+
+    @POST("categories")
+    Call<ApiResponse<DishCategory>> createCategory(@Header("Authorization") String token, @Body DishCategory category);
+
+    @PUT("categories/{id}")
+    Call<ApiResponse<DishCategory>> updateCategory(@Header("Authorization") String token, @Path("id") String id, @Body DishCategory category);
+
+    @DELETE("categories/{id}")
+    Call<ApiResponse<Void>> deleteCategory(@Header("Authorization") String token, @Path("id") String id);
+
     // ========== 推送接口 ==========
 
     @GET("push/list")
@@ -57,6 +73,9 @@ public interface ApiService {
 
     @POST("friends/add")
     Call<ApiResponse<Map<String, String>>> addFriend(@Header("Authorization") String token, @Query("friendId") String friendId);
+
+    @GET("friendships/list/{userId}")
+    Call<ApiResponse<List<FriendDTO>>> getFriendList(@Path("userId") String userId);
 
     // ========== 文件上传接口 ==========
 

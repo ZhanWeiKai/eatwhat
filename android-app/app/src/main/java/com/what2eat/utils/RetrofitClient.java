@@ -100,6 +100,16 @@ public class RetrofitClient {
     }
 
     /**
+     * 保存用户头像
+     */
+    public static void saveUserAvatar(Context context, String avatar) {
+        if (preferences == null) {
+            preferences = context.getSharedPreferences("What2Eat", Context.MODE_PRIVATE);
+        }
+        preferences.edit().putString("avatar", avatar).apply();
+    }
+
+    /**
      * 获取用户ID
      */
     public static String getUserId(Context context) {
@@ -107,6 +117,36 @@ public class RetrofitClient {
             preferences = context.getSharedPreferences("What2Eat", Context.MODE_PRIVATE);
         }
         return preferences.getString("userId", null);
+    }
+
+    /**
+     * 获取用户昵称
+     */
+    public static String getNickname(Context context) {
+        if (preferences == null) {
+            preferences = context.getSharedPreferences("What2Eat", Context.MODE_PRIVATE);
+        }
+        return preferences.getString("nickname", null);
+    }
+
+    /**
+     * 获取用户头像
+     */
+    public static String getAvatar(Context context) {
+        if (preferences == null) {
+            preferences = context.getSharedPreferences("What2Eat", Context.MODE_PRIVATE);
+        }
+        return preferences.getString("avatar", null);
+    }
+
+    /**
+     * 获取用户名
+     */
+    public static String getUsername(Context context) {
+        if (preferences == null) {
+            preferences = context.getSharedPreferences("What2Eat", Context.MODE_PRIVATE);
+        }
+        return preferences.getString("username", null);
     }
 
     /**

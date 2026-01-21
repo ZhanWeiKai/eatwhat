@@ -65,12 +65,25 @@ public class Push {
     }
 
     /**
-     * 默认推送者头像
+     * 默认推送者头像（使用配置的域名）
      */
     @Transient
-    private static final String DEFAULT_AVATAR = "http://localhost:8883/api/static/default-avatar.png";
+    private String getDefaultAvatar() {
+        String baseUrl = System.getProperty("file.base-url", "http://api.jamesweb.org:8883/api");
+        return baseUrl + "/static/default-avatar.png";
+    }
 
     public String getPusherAvatar() {
-        return pusherAvatar != null ? pusherAvatar : DEFAULT_AVATAR;
+        if (pusherAvatar != null && !pusherAvatar.isEmpty()) {
+            // 如果头像URL是localhost或局域网IP开头，替换为域名
+            if (pusherAvatar.contains("localhost:8883")) {
+                return pusherAvatar.replace("http://localhost:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            if (pusherAvatar.contains("10.88.1.127:8883")) {
+                return pusherAvatar.replace("http://10.88.1.127:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            return pusherAvatar;
+        }
+        return getDefaultAvatar();
     }
 }

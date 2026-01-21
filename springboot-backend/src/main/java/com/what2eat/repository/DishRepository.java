@@ -26,4 +26,14 @@ public interface DishRepository extends JpaRepository<Dish, String> {
      * 查找所有菜品，按创建时间倒序
      */
     List<Dish> findAllByOrderByCreatedAtDesc();
+
+    /**
+     * 查找所有菜品，先按分类升序，再按创建时间倒序
+     */
+    List<Dish> findAllByOrderByCategoryAscCreatedAtDesc();
+
+    /**
+     * 检查某个分类下是否有菜品
+     */
+    boolean existsByCategory(String category);
 }

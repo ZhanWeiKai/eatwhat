@@ -51,12 +51,25 @@ public class Dish {
     private LocalDateTime updatedAt;
 
     /**
-     * 默认图片
+     * 默认图片（使用配置的域名）
      */
     @Transient
-    private static final String DEFAULT_IMAGE = "http://localhost:8883/api/static/default-dish.png";
+    private String getDefaultImage() {
+        String baseUrl = System.getProperty("file.base-url", "http://api.jamesweb.org:8883/api");
+        return baseUrl + "/static/default-dish.png";
+    }
 
     public String getImageUrl() {
-        return imageUrl != null ? imageUrl : DEFAULT_IMAGE;
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            // 如果图片URL是localhost或局域网IP开头，替换为域名
+            if (imageUrl.contains("localhost:8883")) {
+                return imageUrl.replace("http://localhost:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            if (imageUrl.contains("10.88.1.127:8883")) {
+                return imageUrl.replace("http://10.88.1.127:8883/api", "http://api.jamesweb.org:8883/api");
+            }
+            return imageUrl;
+        }
+        return getDefaultImage();
     }
 }

@@ -1,6 +1,7 @@
 package com.what2eat.ui.main;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.what2eat.R;
+import com.what2eat.service.WebSocketService;
+import com.what2eat.ui.friend.FriendListActivity;
 import com.what2eat.ui.menu.MenuActivity;
 import com.what2eat.ui.push.PushListActivity;
 import com.what2eat.ui.qrcode.QRCodeActivity;
@@ -30,15 +33,31 @@ public class MainActivity extends AppCompatActivity {
     private CardView cardMyPushes;
     private CardView cardScan;
     private CardView cardMyQR;
+    private CardView cardMyFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 启动WebSocket前台服务
+        startWebSocketService();
+
         initViews();
         setListeners();
         loadUserInfo();
+    }
+
+    /**
+     * 启动WebSocket前台服务
+     */
+    private void startWebSocketService() {
+        Intent serviceIntent = new Intent(this, WebSocketService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
     }
 
     @Override
@@ -55,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         cardMyPushes = findViewById(R.id.cardMyPushes);
         cardScan = findViewById(R.id.cardScan);
         cardMyQR = findViewById(R.id.cardMyQR);
+        cardMyFriends = findViewById(R.id.cardMyFriends);
     }
 
     private void setListeners() {
@@ -81,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
         // 我的二维码
         cardMyQR.setOnClickListener(v -> {
             startActivity(new Intent(this, QRCodeActivity.class));
+        });
+
+        // 我的好友
+        cardMyFriends.setOnClickListener(v -> {
+            startActivity(new Intent(this, FriendListActivity.class));
         });
 
         // 退出登录

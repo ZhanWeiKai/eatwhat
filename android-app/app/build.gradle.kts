@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId = "com.what2eat"
-        minSdk = 33
-        targetSdk = 33
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -18,19 +18,24 @@ android {
 
     buildTypes {
         debug {
+            isDebuggable = true
             // 真机测试：使用电脑的局域网IP（根据实际情况修改）
             // 请将下面的IP地址改为您电脑的局域网IP
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.100:8883/api/\"")
-            buildConfigField("String", "WS_URL", "\"ws://192.168.1.100:8883/api/ws\"")
+            // buildConfigField("String", "BASE_URL", "\"http://10.88.1.127:8883/api/\"")
+            // buildConfigField("String", "WS_URL", "\"ws://10.88.1.127:8883/api/ws\"")
+
+            // 生产环境：使用域名（DNS-only模式，HTTP）
+            buildConfigField("String", "BASE_URL", "\"http://api.jamesweb.org:8883/api/\"")
+            buildConfigField("String", "WS_URL", "\"ws://api.jamesweb.org:8883/api/ws\"")
 
             // 模拟器测试：使用10.0.2.2
             // buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8883/api/\"")
             // buildConfigField("String", "WS_URL", "\"ws://10.0.2.2:8883/api/ws\"")
         }
         release {
-            // 生产环境：配置实际的服务器地址
-            buildConfigField("String", "BASE_URL", "\"http://YOUR_SERVER_IP:8883/api/\"")
-            buildConfigField("String", "WS_URL", "\"ws://YOUR_SERVER_IP:8883/api/ws\"")
+            // 生产环境：使用域名（DNS-only模式，HTTP）
+            buildConfigField("String", "BASE_URL", "\"http://api.jamesweb.org:8883/api/\"")
+            buildConfigField("String", "WS_URL", "\"ws://api.jamesweb.org:8883/api/ws\"")
 
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -66,6 +71,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // ZXing (二维码)
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")

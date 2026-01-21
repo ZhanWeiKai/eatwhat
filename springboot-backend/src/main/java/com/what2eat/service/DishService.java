@@ -19,10 +19,10 @@ public class DishService {
     private final DishRepository dishRepository;
 
     /**
-     * 获取所有菜品
+     * 获取所有菜品（按分类排序，同一分类内按创建时间倒序）
      */
     public List<Dish> getAllDishes() {
-        return dishRepository.findAllByOrderByCreatedAtDesc();
+        return dishRepository.findAllByOrderByCategoryAscCreatedAtDesc();
     }
 
     /**
