@@ -78,8 +78,8 @@ springdoc:
 # 百度网盘配置
 baidu:
   drive:
-    app-key: ${BAIDU_APP_KEY:your-app-key}
-    secret-key: ${BAIDU_SECRET_KEY:your-secret-key}
+    app-key: IPcOBjxpoZm20iAhwIJH0y1aV7dY5nUm
+    secret-key: LSvdtfEbJEJaI1TzHaVRDDBQpeHOP6yd
     redirect-uri: http://api.jamesweb.org:8883/api/baidu/oauth/callback
     upload-api: https://pan.baidu.com/rest/2.0/xpan/file
     authorize-url: https://openapi.baidu.com/oauth/2.0/authorize
