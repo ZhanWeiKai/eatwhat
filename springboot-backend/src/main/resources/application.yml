@@ -87,7 +87,7 @@ baidu:
 
 # 智谱AI配置
 zhipuai:
-  api-key: cea9d940b7b7498d916e1c924ba3b6ca.zwaG7aTXwBW60Dr4
+  api-key: ${ZHIPUAI_API_KEY:cea9d940b7b7498d916e1c924ba3b6ca.zwaG7aTXwBW60Dr4}
   api-url: https://open.bigmodel.cn/api/paas/v4/chat/completions
   model: glm-4-flash
   base-prompt: |
