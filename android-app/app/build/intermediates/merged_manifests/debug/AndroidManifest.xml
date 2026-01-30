@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.what2eat"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="24"
+        android:targetSdkVersion="34" />
+
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 相机权限（扫码功能） -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 存储权限（选择图片） -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <!-- 通知权限（Android 13+） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- 振动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 前台服务权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="com.what2eat.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.what2eat.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.landscape"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:extractNativeLibs="false"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@android:drawable/sym_def_app_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.What2Eat"
+        android:usesCleartextTraffic="true" >
+
+        <!-- WebSocket前台服务 -->
+        <service
+            android:name="com.what2eat.service.WebSocketService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- 启动页（登录/注册） -->
+        <activity
+            android:name="com.what2eat.ui.login.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.What2Eat" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 主页 -->
+        <activity
+            android:name="com.what2eat.ui.main.MainActivity"
+            android:exported="false" />
+
+        <!-- 点菜页面 -->
+        <activity
+            android:name="com.what2eat.ui.menu.MenuActivity"
+            android:exported="false" />
+
+        <!-- 推送记录页面 -->
+        <activity
+            android:name="com.what2eat.ui.push.PushListActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+
+        <!-- 好友列表页面 -->
+        <activity
+            android:name="com.what2eat.ui.friend.FriendListActivity"
+            android:exported="false" />
+
+        <!-- 分类管理页面 -->
+        <activity
+            android:name="com.what2eat.ui.category.CategoryManageActivity"
+            android:exported="false" />
+
+        <!-- 二维码页面 -->
+        <activity
+            android:name="com.what2eat.ui.qrcode.QRCodeActivity"
+            android:exported="false" />
+
+        <!-- 扫描页面 -->
+        <activity
+            android:name="com.what2eat.ui.qrcode.ScanActivity"
+            android:exported="false"
+            android:theme="@style/Theme.What2Eat.NoActionBar" />
+
+        <!-- 上传菜品页面 -->
+        <activity
+            android:name="com.what2eat.ui.upload.UploadActivity"
+            android:exported="false" />
+
+        <!-- 相册页面 -->
+        <activity
+            android:name="com.what2eat.ui.photo.PhotoActivity"
+            android:exported="false" />
+
+        <!-- 照片详情页面（大图查看） -->
+        <activity
+            android:name="com.what2eat.ui.photo.PhotoDetailActivity"
+            android:exported="false"
+            android:screenOrientation="unspecified"
+            android:theme="@style/Theme.What2Eat.NoActionBar" />
+
+        <!-- 百度网盘授权页面 -->
+        <activity
+            android:name="com.what2eat.ui.photo.BaiduOAuthActivity"
+            android:exported="false" />
+
+        <!-- FileProvider用于相机拍照 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.what2eat.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.what2eat.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="sensorLandscape"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

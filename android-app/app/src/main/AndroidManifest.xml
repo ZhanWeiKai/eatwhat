@@ -93,6 +93,34 @@
             android:name=".ui.upload.UploadActivity"
             android:exported="false" />
 
+        <!-- 相册页面 -->
+        <activity
+            android:name=".ui.photo.PhotoActivity"
+            android:exported="false" />
+
+        <!-- 照片详情页面（大图查看） -->
+        <activity
+            android:name=".ui.photo.PhotoDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.What2Eat.NoActionBar"
+            android:screenOrientation="unspecified" />
+
+        <!-- 百度网盘授权页面 -->
+        <activity
+            android:name=".ui.photo.BaiduOAuthActivity"
+            android:exported="false" />
+
+        <!-- FileProvider用于相机拍照 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

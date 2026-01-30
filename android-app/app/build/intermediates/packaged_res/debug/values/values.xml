@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#FF8533</color>
+    <color name="background">#F5F5F5</color>
+    <color name="black">#000000</color>
+    <color name="cart_background">#1E293B</color>
+    <color name="cart_bg">#1E293B</color>
+    <color name="delete">#F5222D</color>
+    <color name="error">#F5222D</color>
+    <color name="info">#1890FF</color>
+    <color name="primary">#FF6600</color>
+    <color name="primary_dark">#E65C00</color>
+    <color name="primary_light">#FF8533</color>
+    <color name="success">#52C41A</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_hint">#CCCCCC</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#999999</color>
+    <color name="warning">#FAAD14</color>
+    <color name="white">#FFFFFF</color>
+    <string name="add_friend">添加好友</string>
+    <string name="add_friend_success">添加成功</string>
+    <string name="app_name">今天吃什么</string>
+    <string name="cancel">取消</string>
+    <string name="cart">购物车</string>
+    <string name="cold_dish">凉菜</string>
+    <string name="confirm">确认</string>
+    <string name="confirm_delete">确认删除</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="delete">删除</string>
+    <string name="dish_desc">菜品描述</string>
+    <string name="dish_name">菜品名称</string>
+    <string name="dish_price">价格</string>
+    <string name="drink">饮品</string>
+    <string name="error">错误</string>
+    <string name="home">首页</string>
+    <string name="hot_dish">热菜</string>
+    <string name="loading">加载中...</string>
+    <string name="login">登录</string>
+    <string name="login_failed">登录失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="my_friends">我的好友</string>
+    <string name="my_photos">我的相册</string>
+    <string name="my_pushes">已推送菜单</string>
+    <string name="my_qr">我的二维码</string>
+    <string name="nickname">昵称</string>
+    <string name="no_data">暂无数据</string>
+    <string name="no_permission">无权限</string>
+    <string name="password">密码</string>
+    <string name="push_list">已推送菜单</string>
+    <string name="push_menu">推送菜单</string>
+    <string name="push_success">推送成功</string>
+    <string name="qrcode_title">我的二维码</string>
+    <string name="register">注册</string>
+    <string name="register_failed">注册失败</string>
+    <string name="register_success">注册成功</string>
+    <string name="retry">重试</string>
+    <string name="scan_qr">扫一扫</string>
+    <string name="scan_title">扫一扫</string>
+    <string name="select_category">选择分类</string>
+    <string name="select_image">选择图片</string>
+    <string name="soup">汤品</string>
+    <string name="staple">主食</string>
+    <string name="start_order">开始点菜</string>
+    <string name="submit">提交</string>
+    <string name="success">成功</string>
+    <string name="total">合计</string>
+    <string name="upload_dish">上传菜品</string>
+    <string name="upload_success">上传成功</string>
+    <string name="upload_title">上传菜品</string>
+    <string name="username">用户名</string>
+    <string name="view_cart">查看购物车</string>
+    <style name="CardView">
+        <item name="android:background">@color/white</item>
+        <item name="android:padding">16dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+    <style name="InputEditText" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="PrimaryButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/bg_button_primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="Theme.What2Eat" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+    <style name="Theme.What2Eat.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

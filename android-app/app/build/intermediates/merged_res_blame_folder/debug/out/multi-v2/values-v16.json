@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.what2eat.app-mergeDebugResources-33:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\weika\\.gradle\\caches\\9.0-milestone-1\\transforms\\5af7a02ff3df49551ea4f2e54976e1e8\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\weika\\.gradle\\caches\\9.0-milestone-1\\transforms\\dca0871cf23485ce27ed14a272a2cca8\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                }
+            ]
+        }
+    ]
+}

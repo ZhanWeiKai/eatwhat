@@ -4,6 +4,7 @@ import com.what2eat.data.model.ApiResponse;
 import com.what2eat.data.model.Dish;
 import com.what2eat.data.model.DishCategory;
 import com.what2eat.data.model.FriendDTO;
+import com.what2eat.data.model.Photo;
 import com.what2eat.data.model.Push;
 import com.what2eat.data.model.User;
 
@@ -29,6 +30,9 @@ public interface ApiService {
 
     @GET("auth/me")
     Call<ApiResponse<User>> getCurrentUser(@Header("Authorization") String token);
+
+    @POST("auth/logout")
+    Call<ApiResponse<Void>> logout(@Header("Authorization") String token);
 
     // ========== 菜品接口 ==========
 
@@ -82,4 +86,20 @@ public interface ApiService {
     @Multipart
     @POST("upload/image")
     Call<ApiResponse<Map<String, String>>> uploadImage(@Part MultipartBody.Part file);
+
+    // ========== 相册接口 ==========
+
+    @GET("photos")
+    Call<ApiResponse<List<Photo>>> getCurrentUserPhotos(@Header("Authorization") String token);
+
+    @POST("photos")
+    Call<ApiResponse<Photo>> uploadPhoto(@Header("Authorization") String token, @Body Map<String, Object> request);
+
+    @DELETE("photos/{photoId}")
+    Call<ApiResponse<Void>> deletePhoto(@Header("Authorization") String token, @Path("photoId") String photoId);
+
+    // ========== 百度网盘接口 ==========
+
+    @GET("baidu/oauth/url")
+    Call<String> getBaiduOAuthUrl(@Query("userId") String userId);
 }
