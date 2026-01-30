@@ -117,6 +117,9 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- HttpClient for AI API (Spring Boot 3.x 内置) -->
+        <!-- 无需额外依赖，使用 Spring 的 RestTemplate -->
+
         <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

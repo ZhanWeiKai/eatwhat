@@ -84,3 +84,16 @@ baidu:
     upload-api: https://pan.baidu.com/rest/2.0/xpan/file
     authorize-url: https://openapi.baidu.com/oauth/2.0/authorize
     token-url: https://openapi.baidu.com/oauth/2.0/token
+
+# 智谱AI配置
+zhipuai:
+  api-key: cea9d940b7b7498d916e1c924ba3b6ca.zwaG7aTXwBW60Dr4
+  api-url: https://open.bigmodel.cn/api/paas/v4/chat/completions
+  model: glm-4-flash
+  base-prompt: |
+    你是一位专业的美食顾问，专门帮助用户解决"今天吃什么"的问题。
+    你的职责：
+    1. 根据用户喜好推荐菜品
+    2. 提供简单的烹饪建议
+    3. 解答美食相关问题
+    请用简洁、友好的语气回复，每次回复控制在100字以内。
