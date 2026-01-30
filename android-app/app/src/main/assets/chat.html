@@ -185,6 +185,9 @@
         // API基础URL
         const API_BASE_URL = 'http://api.jamesweb.org:8883/api';
 
+        // 是否使用模拟打字机效果（临时方案）
+        const USE_SIMULATED_EFFECT = true;
+
         /**
          * 初始化（由Android调用）
          */
@@ -193,8 +196,10 @@
             token = tk;
             console.log('初始化成功，用户ID:', userId);
 
-            // 连接SSE
-            connectSSE();
+            // 暂时不连接SSE，使用模拟效果
+            if (!USE_SIMULATED_EFFECT) {
+                connectSSE();
+            }
 
             // 绑定输入框回车事件
             document.getElementById('input').addEventListener('keypress', function(e) {
@@ -304,31 +309,113 @@
             currentAIMessage = addMessage('<div class="typing-indicator"><span></span><span></span><span></span></div>', 'ai');
 
             // 调用后端API
-            fetch(`${API_BASE_URL}/sse/chat?userId=${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('API响应:', data);
-            })
-            .catch(error => {
-                console.error('API错误:', error);
+            if (USE_SIMULATED_EFFECT) {
+                // 使用模拟打字机效果
+                fetch(`${API_BASE_URL}/ai/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API响应完整数据:', data);
 
-                // 显示错误消息
-                if (currentAIMessage) {
-                    currentAIMessage.innerHTML = '网络错误，请稍后重试';
+                    if (data.code === 200 && data.data && data.data.message) {
+                        console.log('AI回复内容:', data.data.message);
+                        // 模拟打字机效果
+                        simulateTypewriter(data.data.message);
+                    } else {
+                        console.error('API返回数据格式错误:', data);
+                        currentAIMessage.innerHTML = '抱歉，我现在无法回复。';
+                        currentAIMessage.classList.remove('cursor');
+                        document.getElementById('send').disabled = false;
+                        document.getElementById('input').disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('API错误:', error);
+
+                    // 显示错误消息
+                    if (currentAIMessage) {
+                        currentAIMessage.innerHTML = '网络错误，请稍后重试';
+                        currentAIMessage.classList.remove('cursor');
+                    }
+
+                    // 启用输入
+                    document.getElementById('send').disabled = false;
+                    document.getElementById('input').disabled = false;
+                });
+            } else {
+                // 使用SSE流式输出
+                fetch(`${API_BASE_URL}/sse/chat?userId=${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API响应:', data);
+                })
+                .catch(error => {
+                    console.error('API错误:', error);
+
+                    // 显示错误消息
+                    if (currentAIMessage) {
+                        currentAIMessage.innerHTML = '网络错误，请稍后重试';
+                        currentAIMessage.classList.remove('cursor');
+                    }
+
+                    // 启用输入
+                    document.getElementById('send').disabled = false;
+                    document.getElementById('input').disabled = false;
+                });
+            }
+        }
+
+        /**
+         * 模拟打字机效果
+         */
+        function simulateTypewriter(text) {
+            console.log('开始打字机效果，文本长度:', text.length);
+
+            // 清空加载动画
+            currentAIMessage.innerHTML = '';
+
+            // 添加光标
+            currentAIMessage.classList.add('cursor');
+
+            let index = 0;
+            const speed = 50; // 每个字的间隔（毫秒）- 降低速度让效果更明显
+
+            function type() {
+                if (index < text.length) {
+                    currentAIMessage.innerHTML += text.charAt(index);
+                    index++;
+                    scrollToBottom();
+
+                    // 调试：每打10个字输出一次日志
+                    if (index % 10 === 0) {
+                        console.log(`打字进度: ${index}/${text.length}`);
+                    }
+
+                    setTimeout(type, speed);
+                } else {
+                    console.log('打字完成');
+                    // 打字完成，移除光标
                     currentAIMessage.classList.remove('cursor');
+                    // 启用输入
+                    document.getElementById('send').disabled = false;
+                    document.getElementById('input').disabled = false;
                 }
+            }
 
-                // 启用输入
-                document.getElementById('send').disabled = false;
-                document.getElementById('input').disabled = false;
-            });
+            type();
         }
 
         /**
