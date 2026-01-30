@@ -29,4 +29,7 @@ public class ZhipuAIRequest {
 
     @JsonProperty("max_tokens")
     private Integer maxTokens;
+
+    @JsonProperty("stream")
+    private Boolean stream;  // 是否流式输出
 }

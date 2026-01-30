@@ -1,118 +1,125 @@
 package com.what2eat.ui.ai;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.what2eat.R;
-import com.what2eat.data.api.ApiService;
-import com.what2eat.data.model.ChatMessage;
-import com.what2eat.data.model.ChatResponse;
 import com.what2eat.utils.RetrofitClient;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+/**
+ * AI聊天Activity - WebView版本
+ * 使用HTML + SSE实现流式聊天
+ */
 public class AIChatActivity extends AppCompatActivity {
 
-    private RecyclerView chatRecyclerView;
-    private ChatAdapter chatAdapter;
-    private EditText inputEditText;
-    private ImageButton sendButton;
-    private ApiService apiService;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ai_chat);
+        setContentView(R.layout.activity_ai_chat_webview);
 
-        // 初始化视图
-        initViews();
+        // 初始化WebView
+        initWebView();
 
-        // 初始化API
-        apiService = RetrofitClient.getApiService(this);
-
-        // 设置RecyclerView
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        chatAdapter = new ChatAdapter();
-        chatRecyclerView.setAdapter(chatAdapter);
-
-        // 设置发送按钮点击事件
-        sendButton.setOnClickListener(v -> sendMessage());
+        // 加载HTML页面
+        loadChatPage();
     }
 
-    private void initViews() {
-        chatRecyclerView = findViewById(R.id.chat_recycler_view);
-        inputEditText = findViewById(R.id.input_edit_text);
-        sendButton = findViewById(R.id.send_button);
+    /**
+     * 初始化WebView
+     */
+    private void initWebView() {
+        webView = findViewById(R.id.webview);
 
-        // 设置返回按钮
-        findViewById(R.id.back_button).setOnClickListener(v -> finish());
-    }
+        // 配置WebView设置
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);  // 启用JavaScript
+        settings.setDomStorageEnabled(true);  // 启用DOM存储
+        settings.setAllowFileAccess(true);    // 允许文件访问
+        settings.setAllowContentAccess(true); // 允许内容访问
 
-    private void sendMessage() {
-        String message = inputEditText.getText().toString().trim();
+        // 启用缩放
+        settings.setSupportZoom(true);
+        settings.setBuiltInZoomControls(false);
+        settings.setDisplayZoomControls(false);
 
-        if (message.isEmpty()) {
-            return;
-        }
+        // 自适应屏幕
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
 
-        // 添加用户消息到列表
-        ChatMessage userMessage = new ChatMessage(message, true);
-        chatAdapter.addMessage(userMessage);
-        chatRecyclerView.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
+        // 改善滚动性能
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 
-        // 清空输入框
-        inputEditText.setText("");
-
-        // 禁用发送按钮
-        sendButton.setEnabled(false);
-
-        // 添加AI消息占位符
-        ChatMessage aiMessage = new ChatMessage("", false);
-        chatAdapter.addMessage(aiMessage);
-
-        // 调用AI API
-        callAIAPI(message);
-    }
-
-    private void callAIAPI(String message) {
-        Map<String, String> request = new HashMap<>();
-        request.put("message", message);
-
-        apiService.sendChatMessage(request).enqueue(new Callback<ChatResponse>() {
+        // 设置WebViewClient
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ChatResponse chatResponse = response.body();
-                    if (chatResponse.isSuccess() && chatResponse.getData() != null) {
-                        String reply = chatResponse.getData().getMessage();
-                        chatAdapter.updateLastMessage(reply);
-                    } else {
-                        chatAdapter.updateLastMessage("抱歉，我现在无法回复。请稍后再试。");
-                    }
-                } else {
-                    chatAdapter.updateLastMessage("服务器错误，请稍后再试。");
-                }
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
 
-                chatRecyclerView.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
-                sendButton.setEnabled(true);
-            }
-
-            @Override
-            public void onFailure(Call<ChatResponse> call, Throwable t) {
-                t.printStackTrace();
-                chatAdapter.updateLastMessage("网络错误: " + t.getMessage());
-                sendButton.setEnabled(true);
+                // 页面加载完成后，调用JS初始化
+                initJavaScript();
             }
         });
+
+        // 设置WebChromeClient以支持更多功能
+        webView.setWebChromeClient(new WebChromeClient());
+    }
+
+    /**
+     * 加载聊天页面
+     */
+    private void loadChatPage() {
+        // 从assets目录加载HTML
+        webView.loadUrl("file:///android_asset/chat.html");
+    }
+
+    /**
+     * 初始化JavaScript（传递用户信息）
+     */
+    private void initJavaScript() {
+        // 获取用户ID和Token
+        String userId = RetrofitClient.getUserId(this);
+        String token = RetrofitClient.getToken(this);
+
+        if (userId != null && token != null) {
+            // 调用JS的init函数
+            String js = String.format("javascript:init('%s', '%s')", userId, token);
+            webView.evaluateJavascript(js, value -> {
+                System.out.println("JavaScript初始化完成: " + value);
+            });
+        } else {
+            // 未登录，跳转到登录页
+            finish();
+        }
+    }
+
+    /**
+     * 返回键处理 - 返回上一页而不是退出
+     */
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Activity销毁时清理WebView
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (webView != null) {
+            webView.destroy();
+            webView = null;
+        }
     }
 }
