@@ -3010,6 +3010,8 @@ drawable avd_hide_password
 drawable avd_show_password
 drawable bg_button_primary
 drawable bg_button_secondary
+drawable bg_chat_ai
+drawable bg_chat_user
 drawable bg_image_upload
 drawable bg_input
 drawable bg_input_white
@@ -3437,6 +3439,7 @@ id material_timepicker_view
 id material_value_index
 id matrix
 id message
+id message_text
 id middle
 id mini
 id month_grid
@@ -3638,6 +3641,7 @@ id textinput_placeholder
 id textinput_prefix_text
 id textinput_suffix_text
 id time
+id time_text
 id title
 id titleDividerNoCustom
 id title_template
@@ -3861,6 +3865,8 @@ layout dialog_scan_result
 layout item_cart
 layout item_category
 layout item_category_manage
+layout item_chat_message_ai
+layout item_chat_message_user
 layout item_dish
 layout item_friend
 layout item_photo

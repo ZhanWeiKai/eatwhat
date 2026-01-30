@@ -20,6 +20,8 @@ color warning
 color white
 drawable bg_button_primary
 drawable bg_button_secondary
+drawable bg_chat_ai
+drawable bg_chat_user
 drawable bg_image_upload
 drawable bg_input
 drawable bg_input_white
@@ -82,6 +84,7 @@ id ivDishImage
 id ivPushDishImage
 id ivQRCode
 id loginForm
+id message_text
 id recyclerView
 id recyclerViewPhotos
 id registerForm
@@ -92,6 +95,7 @@ id rvPushes
 id selectedIndicator
 id spinnerCategory
 id statusIndicator
+id time_text
 id toolbar
 id tvCartBadge
 id tvCartCount
@@ -134,6 +138,8 @@ layout dialog_scan_result
 layout item_cart
 layout item_category
 layout item_category_manage
+layout item_chat_message_ai
+layout item_chat_message_user
 layout item_dish
 layout item_friend
 layout item_photo
