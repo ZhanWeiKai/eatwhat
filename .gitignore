@@ -1,1 +1,12 @@
-tmpclaude
+# Claude Code临时文件
+tmpclaude*
+tmpclaude-*.cwd
+nul
+
+# Claude临时文件夹
+.claude-temp/
+
+# 本地配置文件（包含敏感信息）
+application-local.yml
+application-dev.yml
+.env
