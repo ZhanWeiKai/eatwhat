@@ -1,6 +1,7 @@
 package com.what2eat.data.api;
 
 import com.what2eat.data.model.ApiResponse;
+import com.what2eat.data.model.ChatResponse;
 import com.what2eat.data.model.Dish;
 import com.what2eat.data.model.DishCategory;
 import com.what2eat.data.model.FriendDTO;
@@ -102,4 +103,9 @@ public interface ApiService {
 
     @GET("baidu/oauth/url")
     Call<String> getBaiduOAuthUrl(@Query("userId") String userId);
+
+    // ========== AI聊天接口 ==========
+
+    @POST("ai/chat")
+    Call<ChatResponse> sendChatMessage(@Body Map<String, String> request);
 }
