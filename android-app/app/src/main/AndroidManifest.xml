@@ -110,6 +110,12 @@
             android:name=".ui.photo.BaiduOAuthActivity"
             android:exported="false" />
 
+        <!-- AI聊天页面 -->
+        <activity
+            android:name=".ui.ai.AIChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- FileProvider用于相机拍照 -->
         <provider
             android:name="androidx.core.content.FileProvider"

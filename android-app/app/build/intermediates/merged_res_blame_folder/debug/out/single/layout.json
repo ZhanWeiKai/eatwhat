@@ -36,6 +36,10 @@
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_category_manage.xml"
     },
     {
+        "merged": "com.what2eat.app-mergeDebugResources-34:/layout/activity_ai_chat.xml",
+        "source": "com.what2eat.app-main-37:/layout/activity_ai_chat.xml"
+    },
+    {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-mergeDebugResources-34:\\layout\\activity_baidu_oauth.xml",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\activity_baidu_oauth.xml"
     },
@@ -46,6 +50,10 @@
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-mergeDebugResources-34:\\layout\\item_photo.xml",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_photo.xml"
+    },
+    {
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-mergeDebugResources-34:\\layout\\item_chat_message_ai.xml",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_chat_message_ai.xml"
     },
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-mergeDebugResources-34:\\layout\\activity_photo.xml",
@@ -96,11 +104,7 @@
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\activity_menu.xml"
     },
     {
-        "merged": "com.what2eat.app-mergeDebugResources-34:/layout/item_chat_message_ai.xml",
-        "source": "com.what2eat.app-main-37:/layout/item_chat_message_ai.xml"
-    },
-    {
-        "merged": "com.what2eat.app-mergeDebugResources-34:/layout/item_chat_message_user.xml",
-        "source": "com.what2eat.app-main-37:/layout/item_chat_message_user.xml"
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-mergeDebugResources-34:\\layout\\item_chat_message_user.xml",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_chat_message_user.xml"
     }
 ]

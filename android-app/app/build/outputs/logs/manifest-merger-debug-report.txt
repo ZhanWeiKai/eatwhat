@@ -1,20 +1,20 @@
 -- Merging decision tree log ---
 provider#androidx.core.content.FileProvider
-INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:114:9-122:20
+INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:120:9-128:20
 	android:grantUriPermissions
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:118:13-47
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:124:13-47
 	android:authorities
 		INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:116:13-64
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:122:13-64
 	android:exported
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:117:13-37
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:123:13-37
 	android:name
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:115:13-62
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:121:13-62
 manifest
-ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-126:12
-INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-126:12
-INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-126:12
-INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-126:12
+ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-132:12
+INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:2:1-132:12
 MERGED from [androidx.databinding:viewbinding:8.2.1] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\f629620cd6d85a7b8e213fa13ba88502\transformed\viewbinding-8.2.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\2002fa9a70930783b63c829697b5c41f\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\c280327615cba81c196d64aebd5bc17c\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
@@ -118,8 +118,8 @@ ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xm
 	android:name
 		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:25:22-65
 application
-ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-124:19
-INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-124:19
+ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-130:19
+INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-130:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\2002fa9a70930783b63c829697b5c41f\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\2002fa9a70930783b63c829697b5c41f\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\c280327615cba81c196d64aebd5bc17c\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -260,12 +260,20 @@ ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xm
 		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:111:13-37
 	android:name
 		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:110:13-56
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:119:13-121:54
-	android:resource
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:121:17-51
+activity#com.what2eat.ui.ai.AIChatActivity
+ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:114:9-117:58
+	android:windowSoftInputMode
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:117:13-55
+	android:exported
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:116:13-37
 	android:name
-		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:120:17-67
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:115:13-49
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:125:13-127:54
+	android:resource
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:127:17-51
+	android:name
+		ADDED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:126:17-67
 uses-sdk
 INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml

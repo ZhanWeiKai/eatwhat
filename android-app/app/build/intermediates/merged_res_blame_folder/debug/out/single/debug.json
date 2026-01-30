@@ -12,6 +12,10 @@
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\activity_photo_detail.xml"
     },
     {
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\drawable_bg_chat_ai.xml.flat",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\drawable\\bg_chat_ai.xml"
+    },
+    {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_dialog_scan_result.xml.flat",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\dialog_scan_result.xml"
     },
@@ -28,12 +32,12 @@
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\layout_cart_bottom_sheet.xml"
     },
     {
-        "merged": "com.what2eat.app-merged_res-35:/layout_item_chat_message_ai.xml.flat",
-        "source": "com.what2eat.app-main-37:/layout/item_chat_message_ai.xml"
-    },
-    {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_item_cart.xml.flat",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_cart.xml"
+    },
+    {
+        "merged": "com.what2eat.app-merged_res-35:/layout_activity_ai_chat.xml.flat",
+        "source": "com.what2eat.app-main-37:/layout/activity_ai_chat.xml"
     },
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_activity_menu.xml.flat",
@@ -56,20 +60,12 @@
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\activity_upload.xml"
     },
     {
-        "merged": "com.what2eat.app-merged_res-35:/drawable_bg_chat_user.xml.flat",
-        "source": "com.what2eat.app-main-37:/drawable/bg_chat_user.xml"
-    },
-    {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_activity_scan.xml.flat",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\activity_scan.xml"
     },
     {
-        "merged": "com.what2eat.app-merged_res-35:/drawable_bg_chat_ai.xml.flat",
-        "source": "com.what2eat.app-main-37:/drawable/bg_chat_ai.xml"
-    },
-    {
-        "merged": "com.what2eat.app-merged_res-35:/layout_item_chat_message_user.xml.flat",
-        "source": "com.what2eat.app-main-37:/layout/item_chat_message_user.xml"
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_item_chat_message_ai.xml.flat",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_chat_message_ai.xml"
     },
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\xml_file_paths.xml.flat",
@@ -94,6 +90,10 @@
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_item_push_dish.xml.flat",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_push_dish.xml"
+    },
+    {
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\layout_item_chat_message_user.xml.flat",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\layout\\item_chat_message_user.xml"
     },
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\drawable_online_dot.xml.flat",
@@ -130,6 +130,10 @@
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\drawable_placeholder.xml.flat",
         "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\drawable\\placeholder.xml"
+    },
+    {
+        "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\drawable_bg_chat_user.xml.flat",
+        "source": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-main-37:\\drawable\\bg_chat_user.xml"
     },
     {
         "merged": "C:\\Users\\weika\\.gradle\\daemon\\9.0-milestone-1\\com.what2eat.app-merged_res-35:\\drawable_default_avatar.xml.flat",

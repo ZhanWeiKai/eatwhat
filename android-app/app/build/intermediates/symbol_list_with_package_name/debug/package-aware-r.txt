@@ -3205,6 +3205,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id back_button
 id barcodeView
 id barrier
 id baseline
@@ -3260,6 +3261,7 @@ id center_vertical
 id chain
 id chain2
 id chains
+id chat_recycler_view
 id checkbox
 id checked
 id chronometer
@@ -3390,6 +3392,8 @@ id immediateStop
 id included
 id indeterminate
 id info
+id input_edit_text
+id input_layout
 id invisible
 id inward
 id italic
@@ -3570,6 +3574,7 @@ id select_dialog_listview
 id selected
 id selectedIndicator
 id selection_type
+id send_button
 id sharedValueSet
 id sharedValueUnset
 id shortcut
@@ -3644,6 +3649,7 @@ id time
 id time_text
 id title
 id titleDividerNoCustom
+id title_bar
 id title_template
 id toggle
 id toolbar
@@ -3832,6 +3838,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_ai_chat
 layout activity_baidu_oauth
 layout activity_category_manage
 layout activity_friend_list

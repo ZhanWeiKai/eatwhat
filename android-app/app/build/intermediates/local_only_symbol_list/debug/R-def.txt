@@ -29,6 +29,7 @@ drawable default_avatar
 drawable offline_dot
 drawable online_dot
 drawable placeholder
+id back_button
 id barcodeView
 id btnAdd
 id btnAddFriend
@@ -60,6 +61,7 @@ id cardScan
 id cardStartOrder
 id cardUpload
 id cartBottomBar
+id chat_recycler_view
 id contentArea
 id dishListContainer
 id emptyState
@@ -78,6 +80,8 @@ id imageContainer
 id imagePreview
 id imageViewPhoto
 id imageViewPhotoDetail
+id input_edit_text
+id input_layout
 id ivAvatar
 id ivCartDishImage
 id ivDishImage
@@ -93,9 +97,11 @@ id rvCategories
 id rvDishes
 id rvPushes
 id selectedIndicator
+id send_button
 id spinnerCategory
 id statusIndicator
 id time_text
+id title_bar
 id toolbar
 id tvCartBadge
 id tvCartCount
@@ -121,6 +127,7 @@ id tvUserId
 id uploadPlaceholder
 id viewPagerPhoto
 id webView
+layout activity_ai_chat
 layout activity_baidu_oauth
 layout activity_category_manage
 layout activity_friend_list

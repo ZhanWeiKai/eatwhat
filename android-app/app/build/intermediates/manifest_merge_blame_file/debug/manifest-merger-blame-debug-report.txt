@@ -102,7 +102,7 @@
 57-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:44:9-33
 58
 59    <application
-59-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-124:19
+59-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:27:5-130:19
 60        android:allowBackup="true"
 60-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:28:9-35
 61        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -251,103 +251,113 @@
 147            android:exported="false" />
 147-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:111:13-37
 148
-149        <!-- FileProvider用于相机拍照 -->
-150        <provider
-151            android:name="androidx.core.content.FileProvider"
-151-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:115:13-62
-152            android:authorities="com.what2eat.fileprovider"
-152-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:116:13-64
-153            android:exported="false"
-153-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:117:13-37
-154            android:grantUriPermissions="true" >
-154-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:118:13-47
-155            <meta-data
-155-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:119:13-121:54
-156                android:name="android.support.FILE_PROVIDER_PATHS"
-156-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:120:17-67
-157                android:resource="@xml/file_paths" />
-157-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:121:17-51
-158        </provider>
-159        <provider
-159-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-160            android:name="androidx.startup.InitializationProvider"
-160-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
-161            android:authorities="com.what2eat.androidx-startup"
-161-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
-162            android:exported="false" >
-162-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
-163            <meta-data
-163-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-164                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-164-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
-165                android:value="androidx.startup" />
-165-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
-166            <meta-data
-166-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
-167                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-167-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
-168                android:value="androidx.startup" />
-168-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+149        <!-- AI聊天页面 -->
+150        <activity
+150-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:114:9-117:58
+151            android:name="com.what2eat.ui.ai.AIChatActivity"
+151-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:115:13-49
+152            android:exported="false"
+152-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:116:13-37
+153            android:windowSoftInputMode="adjustResize" />
+153-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:117:13-55
+154
+155        <!-- FileProvider用于相机拍照 -->
+156        <provider
+157            android:name="androidx.core.content.FileProvider"
+157-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:121:13-62
+158            android:authorities="com.what2eat.fileprovider"
+158-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:122:13-64
+159            android:exported="false"
+159-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:123:13-37
+160            android:grantUriPermissions="true" >
+160-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:124:13-47
+161            <meta-data
+161-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:125:13-127:54
+162                android:name="android.support.FILE_PROVIDER_PATHS"
+162-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:126:17-67
+163                android:resource="@xml/file_paths" />
+163-->C:\claude-project\eatwhat\android-app\app\src\main\AndroidManifest.xml:127:17-51
+164        </provider>
+165        <provider
+165-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+166            android:name="androidx.startup.InitializationProvider"
+166-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+167            android:authorities="com.what2eat.androidx-startup"
+167-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+168            android:exported="false" >
+168-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
 169            <meta-data
-169-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-170                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-170-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+169-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+170                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+170-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
 171                android:value="androidx.startup" />
-171-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-172        </provider>
-173
-174        <activity
-174-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
-175            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-175-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
-176            android:clearTaskOnLaunch="true"
-176-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
-177            android:screenOrientation="sensorLandscape"
-177-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
-178            android:stateNotNeeded="true"
-178-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
-179            android:theme="@style/zxing_CaptureTheme"
-179-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
-180            android:windowSoftInputMode="stateAlwaysHidden" />
-180-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
-181
-182        <receiver
-182-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-183            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-183-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-184            android:directBootAware="false"
-184-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-185            android:enabled="true"
-185-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-186            android:exported="true"
-186-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-187            android:permission="android.permission.DUMP" >
-187-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-188            <intent-filter>
-188-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-189                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-189-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-189-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-190            </intent-filter>
-191            <intent-filter>
-191-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-192                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-192-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-192-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-193            </intent-filter>
+171-->[androidx.emoji2:emoji2:1.2.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\69ef4c87a9c0ec1f732860aab0813ce7\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+172            <meta-data
+172-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+173                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+173-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+174                android:value="androidx.startup" />
+174-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\6ca71d253c528c134c71758d8d8b6460\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+175            <meta-data
+175-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+176                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+176-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+177                android:value="androidx.startup" />
+177-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+178        </provider>
+179
+180        <activity
+180-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
+181            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+181-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
+182            android:clearTaskOnLaunch="true"
+182-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
+183            android:screenOrientation="sensorLandscape"
+183-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
+184            android:stateNotNeeded="true"
+184-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
+185            android:theme="@style/zxing_CaptureTheme"
+185-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
+186            android:windowSoftInputMode="stateAlwaysHidden" />
+186-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\a6e8166141be848f70bbd126f424e783\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
+187
+188        <receiver
+188-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+189            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+189-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+190            android:directBootAware="false"
+190-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+191            android:enabled="true"
+191-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+192            android:exported="true"
+192-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+193            android:permission="android.permission.DUMP" >
+193-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
 194            <intent-filter>
-194-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-195                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-195-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-195-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+194-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+195                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+195-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+195-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
 196            </intent-filter>
 197            <intent-filter>
-197-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-198                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-198-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-198-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+197-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+198                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+198-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+198-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
 199            </intent-filter>
-200        </receiver>
-201    </application>
-202
-203</manifest>
+200            <intent-filter>
+200-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+201                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+201-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+201-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+202            </intent-filter>
+203            <intent-filter>
+203-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+204                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+204-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+204-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\weika\.gradle\caches\9.0-milestone-1\transforms\00d989a7334649e3af12aa3ca3dc8ff7\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+205            </intent-filter>
+206        </receiver>
+207    </application>
+208
+209</manifest>
