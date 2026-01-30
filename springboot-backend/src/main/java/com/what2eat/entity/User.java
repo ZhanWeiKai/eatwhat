@@ -47,6 +47,18 @@ public class User {
     private LocalDateTime updatedAt;
 
     /**
+     * 百度网盘访问令牌
+     */
+    @Column(name = "baidu_access_token", length = 500)
+    private String baiduAccessToken;
+
+    /**
+     * 百度网盘刷新令牌
+     */
+    @Column(name = "baidu_refresh_token", length = 500)
+    private String baiduRefreshToken;
+
+    /**
      * 默认头像（使用配置的域名）
      */
     @Transient

@@ -78,4 +78,32 @@ public class UserService {
         String userId = jwtUtil.getUserIdFromToken(token);
         return getUserById(userId);
     }
+
+    /**
+     * 保存百度网盘Token
+     *
+     * @param userId       用户ID
+     * @param accessToken  访问令牌
+     * @param refreshToken 刷新令牌
+     */
+    @Transactional
+    public void saveBaiduToken(String userId, String accessToken, String refreshToken) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("用户不存在"));
+        user.setBaiduAccessToken(accessToken);
+        user.setBaiduRefreshToken(refreshToken);
+        userRepository.save(user);
+    }
+
+    /**
+     * 获取用户的百度网盘访问令牌
+     *
+     * @param userId 用户ID
+     * @return 访问令牌
+     */
+    public String getBaiduAccessToken(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("用户不存在"));
+        return user.getBaiduAccessToken();
+    }
 }
