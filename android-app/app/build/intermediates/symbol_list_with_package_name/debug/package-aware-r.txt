@@ -3244,6 +3244,7 @@ id buttonPanel
 id cache_measures
 id callMeasure
 id cancel_button
+id cardAIChat
 id cardMyFriends
 id cardMyPhotos
 id cardMyPushes
@@ -3975,6 +3976,7 @@ string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string add_friend
 string add_friend_success
+string ai_chat
 string androidx_startup
 string app_name
 string app_version

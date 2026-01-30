@@ -53,6 +53,7 @@ id btnShare
 id btnStartOrder
 id btnSubmit
 id btnViewCart
+id cardAIChat
 id cardMyFriends
 id cardMyPhotos
 id cardMyPushes
@@ -156,6 +157,7 @@ layout item_push_dish
 layout layout_cart_bottom_sheet
 string add_friend
 string add_friend_success
+string ai_chat
 string app_name
 string cancel
 string cart

@@ -23,6 +23,7 @@
     <string name="my_qr">我的二维码</string>
     <string name="my_friends">我的好友</string>
     <string name="my_photos">我的相册</string>
+    <string name="ai_chat">AI智能助手</string>
 
     <!-- 点菜 -->
     <string name="hot_dish">热菜</string>

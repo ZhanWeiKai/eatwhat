@@ -16,6 +16,7 @@ import com.what2eat.R;
 import com.what2eat.data.api.ApiService;
 import com.what2eat.data.model.ApiResponse;
 import com.what2eat.service.WebSocketService;
+import com.what2eat.ui.ai.AIChatActivity;
 import com.what2eat.ui.friend.FriendListActivity;
 import com.what2eat.ui.login.LoginActivity;
 import com.what2eat.ui.menu.MenuActivity;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView cardMyQR;
     private CardView cardMyFriends;
     private CardView cardMyPhotos;
+    private CardView cardAIChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         cardMyQR = findViewById(R.id.cardMyQR);
         cardMyFriends = findViewById(R.id.cardMyFriends);
         cardMyPhotos = findViewById(R.id.cardMyPhotos);
+        cardAIChat = findViewById(R.id.cardAIChat);
     }
 
     private void setListeners() {
@@ -132,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
         // 我的相册
         cardMyPhotos.setOnClickListener(v -> {
             startActivity(new Intent(this, PhotoActivity.class));
+        });
+
+        // AI智能助手
+        cardAIChat.setOnClickListener(v -> {
+            startActivity(new Intent(this, AIChatActivity.class));
         });
 
         // 退出登录

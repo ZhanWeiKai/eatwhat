@@ -25,6 +25,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnLogout;
 
   @NonNull
+  public final CardView cardAIChat;
+
+  @NonNull
   public final CardView cardMyFriends;
 
   @NonNull
@@ -49,12 +52,13 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvNickname;
 
   private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull Button btnLogout,
-      @NonNull CardView cardMyFriends, @NonNull CardView cardMyPhotos,
+      @NonNull CardView cardAIChat, @NonNull CardView cardMyFriends, @NonNull CardView cardMyPhotos,
       @NonNull CardView cardMyPushes, @NonNull CardView cardMyQR, @NonNull CardView cardScan,
       @NonNull CardView cardStartOrder, @NonNull CardView cardUpload,
       @NonNull TextView tvNickname) {
     this.rootView = rootView;
     this.btnLogout = btnLogout;
+    this.cardAIChat = cardAIChat;
     this.cardMyFriends = cardMyFriends;
     this.cardMyPhotos = cardMyPhotos;
     this.cardMyPushes = cardMyPushes;
@@ -95,6 +99,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btnLogout;
       Button btnLogout = ViewBindings.findChildViewById(rootView, id);
       if (btnLogout == null) {
+        break missingId;
+      }
+
+      id = R.id.cardAIChat;
+      CardView cardAIChat = ViewBindings.findChildViewById(rootView, id);
+      if (cardAIChat == null) {
         break missingId;
       }
 
@@ -146,7 +156,7 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((LinearLayout) rootView, btnLogout, cardMyFriends,
+      return new ActivityMainBinding((LinearLayout) rootView, btnLogout, cardAIChat, cardMyFriends,
           cardMyPhotos, cardMyPushes, cardMyQR, cardScan, cardStartOrder, cardUpload, tvNickname);
     }
     String missingId = rootView.getResources().getResourceName(id);
