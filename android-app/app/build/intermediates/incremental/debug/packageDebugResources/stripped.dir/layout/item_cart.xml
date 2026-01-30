@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@color/white"
+    android:layout_marginBottom="8dp">
+
+    <!-- 菜品图片 -->
+    <ImageView
+        android:id="@+id/ivCartDishImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:background="@color/background"
+        android:contentDescription="菜品图片" />
+
+    <!-- 菜品信息 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCartDishName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="菜品名称"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvCartDishPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="¥38"
+            android:textSize="14sp"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+
+        <!-- 数量控制 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnDecrease"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:text="-"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/text_secondary"
+                android:padding="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp" />
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/btnIncrease"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:text="+"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary"
+                android:padding="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="删除"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/delete"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
