@@ -1,11 +1,16 @@
 package com.what2eat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.what2eat.utils.BaiduImageParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,22 +51,26 @@ public class ImageSearchService {
             }
             log.info("AI生成搜索关键词: {}", keywords);
 
-            // Step 2: 下载百度图片搜索HTML并提取img标签
-            List<String> imageUrls = extractImageUrlsFromBaidu(keywords);
-            if (imageUrls.isEmpty()) {
-                log.warn("未从百度图片搜索中提取到图片URL");
+            // Step 2: 下载百度图片搜索HTML
+            String html = downloadBaiduImageSearchHtml(keywords);
+            if (html == null || html.isEmpty()) {
+                log.warn("无法下载百度图片搜索HTML");
                 return null;
             }
-            log.info("提取到 {} 个图片URL", imageUrls.size());
+            log.info("成功下载HTML，长度: {}", html.length());
 
-            // Step 3: 第2次AI调用 - 选择最佳图片
-            String bestImageUrl = selectBestImage(userQuery, imageUrls);
-            if (bestImageUrl == null || bestImageUrl.trim().isEmpty()) {
-                log.warn("AI未选择最佳图片，使用第一个图片");
-                return imageUrls.get(0); // 降级：返回第一个图片
+            // Step 3: 使用正则表达式从HTML中提取图片URL
+            List<String> imageUrls = extractImageUrlsFromHtml(html);
+            if (imageUrls.isEmpty()) {
+                log.warn("未能从HTML中提取到图片URL");
+                return null;
             }
 
-            log.info("AI选择最佳图片: {}", bestImageUrl);
+            log.info("从HTML中提取到 {} 个图片URL", imageUrls.size());
+
+            // 返回第一个URL
+            String bestImageUrl = imageUrls.get(0);
+            log.info("选择的图片URL: {}", bestImageUrl);
             return bestImageUrl;
 
         } catch (Exception e) {
@@ -94,6 +103,8 @@ public class ImageSearchService {
                 关键词:
                 """, userQuery);
 
+            log.info("发送给AI的prompt:\n{}", prompt);
+
             String keywords = zhipuAIService.chat(prompt);
 
             // 清理AI返回的内容（移除可能的引号、多余空格）
@@ -113,113 +124,86 @@ public class ImageSearchService {
     }
 
     /**
-     * 下载百度图片搜索HTML并提取图片URL
-     * 注意：由于RestTemplate无法处理JavaScript渲染的页面，
-     * 这里使用备用方案：直接生成百度图片CDN的URL格式
+     * 下载百度图片搜索HTML
      */
-    private List<String> extractImageUrlsFromBaidu(String keywords) {
+    private String downloadBaiduImageSearchHtml(String keywords) {
+        try {
+            String encodedKeywords = URLEncoder.encode(keywords, "UTF-8");
+            String searchUrl = "https://image.baidu.com/search/index?tn=baiduimage&fm=result&ie=utf-8&word="
+                + encodedKeywords;
+
+            log.info("百度图片搜索URL: {}", searchUrl);
+
+            // 使用RestTemplate下载HTML，添加浏览器请求头绕过反爬虫
+            RestTemplate restTemplate = new RestTemplate();
+
+            // 添加拦截器设置请求头
+            restTemplate.setInterceptors(List.of(new ClientHttpRequestInterceptor() {
+                @Override
+                public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+                    request.getHeaders().set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+                    request.getHeaders().set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    request.getHeaders().set("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8");
+                    request.getHeaders().set("Referer", "https://www.baidu.com/");
+                    return execution.execute(request, body);
+                }
+            }));
+
+            String html = restTemplate.getForObject(searchUrl, String.class);
+
+            if (html != null) {
+                log.info("成功下载HTML，长度: {}", html.length());
+                // Debug: 打印HTML前2000字符用于调试
+                String preview = html.length() > 2000 ? html.substring(0, 2000) : html;
+                log.info("HTML预览（前2000字符）: {}", preview);
+                return html;
+            }
+
+        } catch (Exception e) {
+            log.error("下载百度图片搜索HTML失败", e);
+        }
+
+        return null;
+    }
+
+    /**
+     * 使用正则表达式从HTML中提取图片URL
+     */
+    private List<String> extractImageUrlsFromHtml(String html) {
         List<String> urls = new ArrayList<>();
 
         try {
-            // 尝试1: 使用RestTemplate下载HTML
-            String html = BaiduImageParser.downloadBaiduImageSearchHtml(keywords);
+            // 更宽松的正则：搜索所有包含 baidu.com/it/u= 的URL
+            // 不限制必须在img标签中，因为百度可能使用data-imgurl等属性
+            Pattern pattern = Pattern.compile(
+                "https?://img[0-3]\\.baidu\\.com/it/u=[0-9]+,[0-9]+[^\"><]*?\\?[wh]=[0-9]+[^\"><]*",
+                Pattern.CASE_INSENSITIVE
+            );
 
-            if (html != null && !html.isEmpty()) {
-                // 成功下载HTML，解析img标签
-                urls = BaiduImageParser.extractImageUrls(html);
+            Matcher matcher = pattern.matcher(html);
+            while (matcher.find()) {
+                String url = matcher.group(0);
 
-                if (!urls.isEmpty()) {
-                    log.info("成功从HTML提取 {} 个图片URL", urls.size());
-                    return urls;
+                // 清理URL：移除可能的HTML实体和Unicode转义
+                url = url.replace("&amp;", "&");
+                url = url.replace("\\u0026", "&");
+                url = url.replace("\\\"", "\"");  // 移除转义的引号
+
+                urls.add(url);
+                log.info("提取到图片URL: {}", url);
+
+                // 只取前10个
+                if (urls.size() >= 10) {
+                    break;
                 }
             }
 
-            // 尝试2: 备用方案 - 直接生成百度图片CDN URL
-            // 使用我们在Playwright测试中验证过的URL格式
-            log.warn("无法从HTML提取图片，使用备用方案：生成百度图片CDN URL");
-
-            // 生成5个百度图片CDN的URL（使用随机ID）
-            for (int i = 0; i < 5; i++) {
-                String url = generateBaiduImageUrl();
-                urls.add(url);
-            }
-
-            log.info("备用方案生成 {} 个图片URL", urls.size());
+            log.info("从HTML中提取到 {} 个百度图片URL", urls.size());
 
         } catch (Exception e) {
-            log.error("从百度提取图片URL失败", e);
+            log.error("从HTML中提取图片URL失败", e);
         }
 
         return urls;
-    }
-
-    /**
-     * 生成百度图片CDN URL（备用方案）
-     * 格式: https://img0.baidu.com/it/u={id1},{id2}&fm=253&fmt=auto&app=138&f=JPEG
-     */
-    private String generateBaiduImageUrl() {
-        // 生成随机ID
-        long id1 = (long) (Math.random() * 4000000000L);
-        long id2 = (long) (Math.random() * 4000000000L);
-
-        // 随机选择img0/img1/img2
-        int imgNum = (int) (Math.random() * 3);
-        String baseUrl = String.format("https://img%d.baidu.com/it/u=%d,%d&fm=253&fmt=auto&app=138&f=JPEG",
-            imgNum, id1, id2);
-
-        return baseUrl;
-    }
-
-    /**
-     * 生成随机的百度图片ID（临时方案）
-     * 实际应该从HTML中提取真实ID
-     */
-    private String generateRandomIds() {
-        // 生成类似 "3315400555,3703261157" 的格式
-        long id1 = (long) (Math.random() * 4000000000L);
-        long id2 = (long) (Math.random() * 4000000000L);
-        return id1 + "," + id2;
-    }
-
-    /**
-     * 第2次AI调用：选择最佳图片
-     */
-    private String selectBestImage(String userQuery, List<String> imageUrls) {
-        try {
-            // 构建AI prompt，让AI选择最佳图片
-            StringBuilder promptBuilder = new StringBuilder();
-            promptBuilder.append(String.format("用户询问: \"%s\"\n\n", userQuery));
-            promptBuilder.append("我从百度图片搜索中提取了以下图片URL，请选择最合适的一个：\n\n");
-
-            for (int i = 0; i < imageUrls.size() && i < 10; i++) {
-                promptBuilder.append(String.format("%d. %s\n", i + 1, imageUrls.get(i)));
-            }
-
-            promptBuilder.append("\n请只返回最合适的图片编号（1-").append(Math.min(imageUrls.size(), 10)).append("），不要任何解释。");
-
-            String response = zhipuAIService.chat(promptBuilder.toString());
-
-            // 解析AI返回的编号
-            if (response != null) {
-                // 提取数字
-                Pattern pattern = Pattern.compile("\\d+");
-                Matcher matcher = pattern.matcher(response.trim());
-
-                if (matcher.find()) {
-                    int index = Integer.parseInt(matcher.group()) - 1;
-                    if (index >= 0 && index < imageUrls.size()) {
-                        log.info("AI选择图片编号: {}", index + 1);
-                        return imageUrls.get(index);
-                    }
-                }
-            }
-
-            log.warn("AI返回无效编号，使用默认选择");
-            return imageUrls.get(0); // 降级：返回第一个
-
-        } catch (Exception e) {
-            log.error("选择最佳图片失败", e);
-            return imageUrls.isEmpty() ? null : imageUrls.get(0);
-        }
     }
 }

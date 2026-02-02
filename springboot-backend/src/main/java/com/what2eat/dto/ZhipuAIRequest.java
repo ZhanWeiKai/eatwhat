@@ -34,4 +34,37 @@ public class ZhipuAIRequest {
 
     @JsonProperty("stream")
     private Boolean stream;  // 是否流式输出
+
+    @JsonProperty("tools")
+    private List<Tool> tools;  // 工具列表（联网搜索等）
+
+    /**
+     * 联网搜索工具
+     */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Tool {
+        @JsonProperty("type")
+        private String type;  // 工具类型：web_search
+
+        @JsonProperty("web_search")
+        private WebSearch webSearch;
+    }
+
+    /**
+     * Web搜索配置
+     */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class WebSearch {
+        @JsonProperty("enable")
+        private Boolean enable;  // 是否启用联网搜索
+
+        @JsonProperty("search_result")
+        private Boolean SearchResult;  // 是否返回搜索结果
+    }
 }

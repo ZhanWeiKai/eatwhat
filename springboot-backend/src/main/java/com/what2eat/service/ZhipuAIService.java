@@ -88,14 +88,11 @@ public class ZhipuAIService {
     private ZhipuAIRequest buildRequest(String userMessage) {
         List<ChatMessage> messages = new ArrayList<>();
 
-        // 暂时去掉系统Prompt，只保留用户消息
-        // TODO: 调试system prompt导致的500错误
-        /*
+        // 添加系统Prompt，让AI专注于美食推荐
         ChatMessage systemMessage = new ChatMessage();
         systemMessage.setRole("system");
         systemMessage.setContent(config.getBasePrompt());
         messages.add(systemMessage);
-        */
 
         // 添加用户消息
         ChatMessage userMsg = new ChatMessage();
@@ -109,7 +106,17 @@ public class ZhipuAIService {
         request.setMessages(messages);
         request.setTemperature(0.7);
         request.setTopP(0.9);
-        // request.setMaxTokens(150);  // 暂时去掉，让模型自己决定
+
+        // 添加联网搜索工具
+        ZhipuAIRequest.Tool tool = new ZhipuAIRequest.Tool();
+        tool.setType("web_search");
+
+        ZhipuAIRequest.WebSearch webSearch = new ZhipuAIRequest.WebSearch();
+        webSearch.setEnable(true);  // 启用联网搜索
+        webSearch.setSearchResult(true);  // 返回搜索结果
+
+        tool.setWebSearch(webSearch);
+        request.setTools(java.util.Collections.singletonList(tool));
 
         return request;
     }

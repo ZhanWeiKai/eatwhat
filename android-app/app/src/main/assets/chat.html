@@ -433,8 +433,11 @@
                         // 模拟打字机效果
                         simulateTypewriter(data.data.message);
 
-                        // 异步搜索图片
-                        searchDishImageAsync(message);
+                        // 异步搜索图片 - 添加调试日志
+                        console.log('===== 准备调用图片搜索，用户查询:', message);
+                        searchDishImageAsync(message).catch(err => {
+                            console.error('图片搜索异常:', err);
+                        });
                     } else {
                         console.error('API返回数据格式错误:', data);
                         currentAIMessage.innerHTML = '抱歉，我现在无法回复。';
@@ -490,11 +493,18 @@
          * 异步搜索菜品图片
          */
         async function searchDishImageAsync(userQuery) {
+            console.log('===== searchDishImageAsync 函数被调用，查询:', userQuery);
+            console.log('===== API_BASE_URL:', API_BASE_URL);
+            console.log('===== token存在?', !!token);
+
             try {
                 console.log('开始异步搜索菜品图片，查询:', userQuery);
 
                 // 调用图片搜索API
-                const response = await fetch(`${API_BASE_URL}/image/search`, {
+                const url = `${API_BASE_URL}/image/search`;
+                console.log('===== 请求URL:', url);
+
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -533,19 +543,38 @@
                 return;
             }
 
-            // 创建图片HTML
-            const imageHtml = `
-                <div style="margin-top: 12px;">
-                    <img src="${imageUrl}"
-                         alt="菜品图片"
-                         style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
-                         onload="console.log('图片加载成功:', this.src)"
-                         onerror="console.error('图片加载失败:', this.src); this.style.display='none';">
-                </div>
-            `;
+            console.log('正在添加图片到消息...');
 
-            // 追加到当前AI消息
-            currentAIMessage.innerHTML += imageHtml;
+            // 使用createElement避免HTML实体转义问题
+            const imageContainer = document.createElement('div');
+            imageContainer.style.marginTop = '12px';
+
+            const label = document.createElement('p');
+            label.textContent = '📷 菜品图片：';
+            label.style.color = '#FF6600';
+            label.style.fontSize = '14px';
+            imageContainer.appendChild(label);
+
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = '菜品图片';
+            img.style.maxWidth = '100%';
+            img.style.borderRadius = '8px';
+            img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+            img.onload = function() {
+                console.log('✅ 图片加载成功!');
+            };
+
+            img.onerror = function() {
+                console.error('❌ 图片加载失败');
+                this.style.display = 'none';
+            };
+
+            imageContainer.appendChild(img);
+            currentAIMessage.appendChild(imageContainer);
+
+            console.log('✅ 图片已添加到消息');
 
             // 滚动到底部
             scrollToBottom();
