@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI智能助手</title>
+    <!-- 引入marked.js用于Markdown解析 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -30,6 +32,18 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 版本号 */
+        .version {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            font-size: 12px;
+            opacity: 0.8;
         }
 
         /* 聊天区域 */
@@ -43,11 +57,12 @@
         /* 消息气泡 */
         .message {
             margin-bottom: 12px;
-            max-width: 80%;
+            max-width: 85%;
             padding: 12px 16px;
             border-radius: 16px;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in;
+            line-height: 1.6;
         }
 
         @keyframes fadeIn {
@@ -70,6 +85,92 @@
             margin-right: auto;
             border-bottom-left-radius: 4px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Markdown样式 */
+        .message.ai strong {
+            color: #FF6600;
+            font-weight: bold;
+        }
+
+        .message.ai h1,
+        .message.ai h2,
+        .message.ai h3 {
+            margin: 12px 0 8px 0;
+            color: #FF6600;
+            font-size: 18px;
+        }
+
+        .message.ai h1:first-child,
+        .message.ai h2:first-child,
+        .message.ai h3:first-child {
+            margin-top: 0;
+        }
+
+        .message.ai ul,
+        .message.ai ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message.ai li {
+            margin: 4px 0;
+        }
+
+        .message.ai blockquote {
+            border-left: 3px solid #FF6600;
+            padding-left: 12px;
+            margin: 8px 0;
+            color: #666;
+            font-style: italic;
+            background: #fff8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .message.ai code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            color: #e83e8c;
+        }
+
+        .message.ai pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        .message.ai pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+
+        .message.ai table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        .message.ai table th,
+        .message.ai table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .message.ai table th {
+            background: #FF6600;
+            color: white;
+        }
+
+        .message.ai table tr:nth-child(even) {
+            background: #f9f9f9;
         }
 
         /* 打字时光标 */
@@ -164,7 +265,10 @@
 </head>
 <body>
     <!-- 顶部标题栏 -->
-    <div class="header">🤖 AI智能助手</div>
+    <div class="header">
+        🤖 AI智能助手
+        <div class="version">v2.1.0 - AI菜谱 + 图片搜索</div>
+    </div>
 
     <!-- 聊天区域 -->
     <div id="chat-box"></div>
@@ -181,6 +285,7 @@
         let token = '';
         let eventSource = null;
         let currentAIMessage = null;
+        let currentAIMarkdownText = '';  // 保存当前AI消息的原始Markdown文本
 
         // API基础URL
         const API_BASE_URL = 'http://api.jamesweb.org:8883/api';
@@ -327,6 +432,9 @@
                         console.log('AI回复内容:', data.data.message);
                         // 模拟打字机效果
                         simulateTypewriter(data.data.message);
+
+                        // 异步搜索图片
+                        searchDishImageAsync(message);
                     } else {
                         console.error('API返回数据格式错误:', data);
                         currentAIMessage.innerHTML = '抱歉，我现在无法回复。';
@@ -379,10 +487,78 @@
         }
 
         /**
+         * 异步搜索菜品图片
+         */
+        async function searchDishImageAsync(userQuery) {
+            try {
+                console.log('开始异步搜索菜品图片，查询:', userQuery);
+
+                // 调用图片搜索API
+                const response = await fetch(`${API_BASE_URL}/image/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ query: userQuery })
+                });
+
+                const data = await response.json();
+                console.log('图片搜索API响应:', data);
+
+                if (data.code === 200 && data.data && data.data.imageUrl) {
+                    // 成功获取图片URL
+                    const imageUrl = data.data.imageUrl;
+                    console.log('成功获取图片URL:', imageUrl);
+
+                    // 在当前AI消息中添加图片
+                    addImageToCurrentMessage(imageUrl);
+                } else {
+                    console.warn('图片搜索失败或无图片:', data);
+                    // 不显示错误，静默失败（纯文字模式）
+                }
+
+            } catch (error) {
+                console.error('异步图片搜索失败:', error);
+                // 静默失败，不影响文字回复
+            }
+        }
+
+        /**
+         * 在当前AI消息中添加图片
+         */
+        function addImageToCurrentMessage(imageUrl) {
+            if (!currentAIMessage) {
+                console.warn('当前AI消息不存在，无法添加图片');
+                return;
+            }
+
+            // 创建图片HTML
+            const imageHtml = `
+                <div style="margin-top: 12px;">
+                    <img src="${imageUrl}"
+                         alt="菜品图片"
+                         style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+                         onload="console.log('图片加载成功:', this.src)"
+                         onerror="console.error('图片加载失败:', this.src); this.style.display='none';">
+                </div>
+            `;
+
+            // 追加到当前AI消息
+            currentAIMessage.innerHTML += imageHtml;
+
+            // 滚动到底部
+            scrollToBottom();
+        }
+
+        /**
          * 模拟打字机效果
          */
         function simulateTypewriter(text) {
             console.log('开始打字机效果，文本长度:', text.length);
+
+            // 保存原始Markdown文本
+            currentAIMarkdownText = text;
 
             // 清空加载动画
             currentAIMessage.innerHTML = '';
@@ -391,11 +567,11 @@
             currentAIMessage.classList.add('cursor');
 
             let index = 0;
-            const speed = 50; // 每个字的间隔（毫秒）- 降低速度让效果更明显
+            const speed = 30; // 每个字的间隔（毫秒）
 
             function type() {
                 if (index < text.length) {
-                    currentAIMessage.innerHTML += text.charAt(index);
+                    currentAIMessage.textContent += text.charAt(index);
                     index++;
                     scrollToBottom();
 
@@ -407,11 +583,45 @@
                     setTimeout(type, speed);
                 } else {
                     console.log('打字完成');
-                    // 打字完成，移除光标
+
+                    // 打字完成，将Markdown转换为HTML
                     currentAIMessage.classList.remove('cursor');
+                    currentAIMessage.innerHTML = marked.parse(currentAIMarkdownText);
+
+                    // 为所有图片添加错误处理和加载提示
+                    const images = currentAIMessage.querySelectorAll('img');
+                    images.forEach(img => {
+                        // 添加加载中提示
+                        const loadingDiv = document.createElement('div');
+                        loadingDiv.className = 'image-loading';
+                        loadingDiv.textContent = '📷 正在加载图片...';
+                        loadingDiv.style.color = '#FF6600';
+                        loadingDiv.style.fontSize = '12px';
+                        loadingDiv.style.marginTop = '8px';
+                        img.parentNode.insertBefore(loadingDiv, img.nextSibling);
+
+                        img.onerror = function() {
+                            console.error('图片加载失败:', this.src);
+                            this.style.display = 'none';
+                            if (loadingDiv) {
+                                loadingDiv.textContent = '❌ 图片加载失败，请尝试重新提问';
+                                loadingDiv.style.color = '#999';
+                            }
+                        };
+                        img.onload = function() {
+                            console.log('图片加载成功:', this.src);
+                            if (loadingDiv) {
+                                loadingDiv.remove();
+                            }
+                        };
+                    });
+
                     // 启用输入
                     document.getElementById('send').disabled = false;
                     document.getElementById('input').disabled = false;
+
+                    // 滚动到底部
+                    scrollToBottom();
                 }
             }
 

@@ -42,6 +42,11 @@ public class AIChatActivity extends AppCompatActivity {
         settings.setAllowFileAccess(true);    // 允许文件访问
         settings.setAllowContentAccess(true); // 允许内容访问
 
+        // 【重要】允许混合内容（HTTPS页面加载HTTP图片）
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         // 启用缩放
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(false);
@@ -54,6 +59,13 @@ public class AIChatActivity extends AppCompatActivity {
         // 改善滚动性能
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+        // 禁用缓存，确保每次都加载最新文件
+        settings.setDatabaseEnabled(false);
+
+        // 设置User Agent，避免缓存
+        String userAgent = settings.getUserAgentString();
+        settings.setUserAgentString(userAgent + "/What2Eat-Chat");
 
         // 设置WebViewClient
         webView.setWebViewClient(new WebViewClient() {
@@ -74,8 +86,9 @@ public class AIChatActivity extends AppCompatActivity {
      * 加载聊天页面
      */
     private void loadChatPage() {
-        // 从assets目录加载HTML
-        webView.loadUrl("file:///android_asset/chat.html");
+        // 从assets目录加载HTML，添加时间戳避免缓存
+        String url = "file:///android_asset/chat.html?t=" + System.currentTimeMillis();
+        webView.loadUrl(url);
     }
 
     /**
