@@ -430,14 +430,9 @@
 
                     if (data.code === 200 && data.data && data.data.message) {
                         console.log('AI回复内容:', data.data.message);
-                        // 模拟打字机效果
-                        simulateTypewriter(data.data.message);
 
-                        // 异步搜索图片 - 添加调试日志
-                        console.log('===== 准备调用图片搜索，用户查询:', message);
-                        searchDishImageAsync(message).catch(err => {
-                            console.error('图片搜索异常:', err);
-                        });
+                        // 模拟打字机效果（传入用户查询，完成后会调用图片搜索）
+                        simulateTypewriter(data.data.message, message);
                     } else {
                         console.error('API返回数据格式错误:', data);
                         currentAIMessage.innerHTML = '抱歉，我现在无法回复。';
@@ -582,9 +577,14 @@
 
         /**
          * 模拟打字机效果
+         * @param {string} text - 要显示的文本
+         * @param {string} userQuery - 用户查询（用于搜索图片）
          */
-        function simulateTypewriter(text) {
+        function simulateTypewriter(text, userQuery) {
             console.log('开始打字机效果，文本长度:', text.length);
+            if (userQuery) {
+                console.log('用户查询（用于图片搜索）:', userQuery);
+            }
 
             // 保存原始Markdown文本
             currentAIMarkdownText = text;
@@ -617,7 +617,7 @@
                     currentAIMessage.classList.remove('cursor');
                     currentAIMessage.innerHTML = marked.parse(currentAIMarkdownText);
 
-                    // 为所有图片添加错误处理和加载提示
+                    // 为Markdown中的图片添加错误处理和加载提示
                     const images = currentAIMessage.querySelectorAll('img');
                     images.forEach(img => {
                         // 添加加载中提示
@@ -630,7 +630,7 @@
                         img.parentNode.insertBefore(loadingDiv, img.nextSibling);
 
                         img.onerror = function() {
-                            console.error('图片加载失败:', this.src);
+                            console.error('Markdown中的图片加载失败:', this.src);
                             this.style.display = 'none';
                             if (loadingDiv) {
                                 loadingDiv.textContent = '❌ 图片加载失败，请尝试重新提问';
@@ -638,12 +638,20 @@
                             }
                         };
                         img.onload = function() {
-                            console.log('图片加载成功:', this.src);
+                            console.log('Markdown中的图片加载成功:', this.src);
                             if (loadingDiv) {
                                 loadingDiv.remove();
                             }
                         };
                     });
+
+                    // ===== 关键修改：打字完成后再搜索菜品图片 =====
+                    if (userQuery) {
+                        console.log('===== 打字完成，准备调用图片搜索，用户查询:', userQuery);
+                        searchDishImageAsync(userQuery).catch(err => {
+                            console.error('图片搜索异常:', err);
+                        });
+                    }
 
                     // 启用输入
                     document.getElementById('send').disabled = false;
