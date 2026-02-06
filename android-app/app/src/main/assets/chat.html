@@ -72,6 +72,41 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
+        /* Markdown样式美化 */
+        .message.ai strong {
+            color: #FF6600;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .message.ai em {
+            color: #666;
+            font-style: italic;
+        }
+
+        .message.ai p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .message.ai ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message.ai li {
+            margin: 4px 0;
+            line-height: 1.5;
+        }
+
+        .message.ai code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+
         /* 打字时光标 */
         .cursor::after {
             content: '▋';
@@ -174,6 +209,9 @@
         <input type="text" id="input" placeholder="输入消息..." autocomplete="off" />
         <button id="send">发送</button>
     </div>
+
+    <!-- 引入marked.js用于Markdown渲染 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.0.0/marked.min.js"></script>
 
     <script>
         // 全局变量
@@ -384,6 +422,9 @@
         function simulateTypewriter(text) {
             console.log('开始打字机效果，文本长度:', text.length);
 
+            // 保存原始Markdown文本
+            const originalMarkdown = text;
+
             // 清空加载动画
             currentAIMessage.innerHTML = '';
 
@@ -391,7 +432,7 @@
             currentAIMessage.classList.add('cursor');
 
             let index = 0;
-            const speed = 50; // 每个字的间隔（毫秒）- 降低速度让效果更明显
+            const speed = 30; // 每个字的间隔（毫秒）
 
             function type() {
                 if (index < text.length) {
@@ -407,11 +448,28 @@
                     setTimeout(type, speed);
                 } else {
                     console.log('打字完成');
-                    // 打字完成，移除光标
+
+                    // 移除光标
                     currentAIMessage.classList.remove('cursor');
+
+                    // 将Markdown转换为HTML
+                    console.log('开始渲染Markdown...');
+                    try {
+                        const htmlContent = marked.parse(originalMarkdown);
+                        currentAIMessage.innerHTML = htmlContent;
+                        console.log('Markdown渲染完成');
+                    } catch (e) {
+                        console.error('Markdown渲染失败:', e);
+                        // 如果渲染失败，保持原文本
+                        currentAIMessage.innerHTML = originalMarkdown;
+                    }
+
                     // 启用输入
                     document.getElementById('send').disabled = false;
                     document.getElementById('input').disabled = false;
+
+                    // 滚动到底部
+                    scrollToBottom();
                 }
             }
 
