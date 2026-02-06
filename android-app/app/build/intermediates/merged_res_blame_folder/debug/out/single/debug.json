@@ -24,6 +24,10 @@
         "source": "com.what2eat.app-main-37:/drawable/bg_image_upload.xml"
     },
     {
+        "merged": "com.what2eat.app-merged_res-35:/layout_activity_ai_chat_webview.xml.flat",
+        "source": "com.what2eat.app-main-37:/layout/activity_ai_chat_webview.xml"
+    },
+    {
         "merged": "com.what2eat.app-merged_res-35:/layout_item_photo_detail.xml.flat",
         "source": "com.what2eat.app-main-37:/layout/item_photo_detail.xml"
     },

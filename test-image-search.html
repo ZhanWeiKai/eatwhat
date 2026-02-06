@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片搜索测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 200px;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .message.user {
+            background: #4CAF50;
+            color: white;
+            text-align: right;
+        }
+        .message.ai {
+            background: #f0f0f0;
+            color: #333;
+        }
+        #input-area {
+            display: flex;
+            gap: 10px;
+        }
+        #input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #send {
+            padding: 10px 20px;
+            background: #FF6600;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #log {
+            background: #f5f5f5;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>图片搜索功能测试</h1>
+
+    <div id="chat-box"></div>
+
+    <div id="input-area">
+        <input type="text" id="input" placeholder="输入菜品名称，如：红烧肉" />
+        <button id="send">发送</button>
+    </div>
+
+    <h3>调试日志</h3>
+    <div id="log"></div>
+
+    <script>
+        // 配置
+        const API_BASE_URL = 'http://api.jamesweb.org:8883/api';
+        const TEST_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMDAxIiwiaWF0IjoxNzM4NDU4NTAyLCJleHAiOjE3Mzg0NjkwMjJ9.abc'; // 测试用token
+
+        let currentAIMessage = null;
+
+        // 重写console.log以显示在页面上
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        function addLog(message) {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${time}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog('LOG: ' + args.join(' '));
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog('ERROR: ' + args.join(' '));
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addLog('WARN: ' + args.join(' '));
+        };
+
+        // 发送消息
+        document.getElementById('send').addEventListener('click', async () => {
+            const input = document.getElementById('input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            addLog(`========== 用户发送消息: ${message} ==========`);
+
+            // 添加用户消息
+            addMessage(message, 'user');
+            input.value = '';
+
+            // 添加AI消息占位符
+            currentAIMessage = addMessage('AI正在回复...', 'ai');
+
+            try {
+                // 调用AI聊天API
+                addLog('开始调用AI聊天API...');
+                const response = await fetch(`${API_BASE_URL}/ai/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TEST_TOKEN}`
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+                addLog(`AI聊天API响应: ${JSON.stringify(data)}`);
+
+                if (data.code === 200 && data.data && data.data.message) {
+                    const aiMessage = data.data.message;
+                    addLog(`AI回复内容: ${aiMessage.substring(0, 50)}...`);
+
+                    // 显示AI回复
+                    currentAIMessage.innerHTML = aiMessage.replace(/\n/g, '<br>');
+
+                    // 异步搜索图片
+                    addLog('========== 准备调用图片搜索 ==========');
+                    await searchDishImageAsync(message);
+                } else {
+                    currentAIMessage.innerHTML = '抱歉，AI回复失败';
+                }
+            } catch (error) {
+                addLog(`错误: ${error.message}`);
+                currentAIMessage.innerHTML = '网络错误';
+            }
+        });
+
+        // 异步搜索图片
+        async function searchDishImageAsync(userQuery) {
+            addLog('===== searchDishImageAsync 函数被调用');
+            addLog(`===== 查询内容: ${userQuery}`);
+            addLog(`===== API_BASE_URL: ${API_BASE_URL}`);
+
+            try {
+                const url = `${API_BASE_URL}/image/search`;
+                addLog(`===== 请求URL: ${url}`);
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TEST_TOKEN}`
+                    },
+                    body: JSON.stringify({ query: userQuery })
+                });
+
+                addLog(`===== 响应状态: ${response.status}`);
+
+                const data = await response.json();
+                addLog(`===== 图片搜索API响应: ${JSON.stringify(data)}`);
+
+                if (data.code === 200 && data.data && data.data.imageUrl) {
+                    const imageUrl = data.data.imageUrl;
+                    addLog(`===== 成功获取图片URL: ${imageUrl}`);
+
+                    // 添加图片到当前AI消息
+                    addImageToCurrentMessage(imageUrl);
+                } else {
+                    addLog('WARN: 图片搜索失败或无图片');
+                }
+
+            } catch (error) {
+                addLog(`ERROR: 异步图片搜索失败: ${error.message}`);
+            }
+        }
+
+        // 添加图片到当前AI消息
+        function addImageToCurrentMessage(imageUrl) {
+            if (!currentAIMessage) {
+                addLog('WARN: 当前AI消息不存在');
+                return;
+            }
+
+            addLog('正在添加图片到消息...');
+
+            // 使用createElement避免HTML实体转义问题
+            const imageContainer = document.createElement('div');
+            imageContainer.style.marginTop = '12px';
+
+            const label = document.createElement('p');
+            label.textContent = '📷 菜品图片：';
+            label.style.color = '#FF6600';
+            label.style.fontSize = '14px';
+            imageContainer.appendChild(label);
+
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = '菜品图片';
+            img.style.maxWidth = '100%';
+            img.style.borderRadius = '8px';
+            img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+            img.onload = function() {
+                addLog('✅ 图片加载成功!');
+            };
+
+            img.onerror = function() {
+                addLog('❌ 图片加载失败');
+            };
+
+            imageContainer.appendChild(img);
+            currentAIMessage.appendChild(imageContainer);
+
+            addLog('✅ 图片已添加到消息');
+        }
+
+        // 添加消息到聊天区域
+        function addMessage(content, type) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = content;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return messageDiv;
+        }
+
+        // 页面加载完成
+        window.onload = function() {
+            addLog('========== 页面加载完成 ==========');
+            addLog('准备就绪，可以测试图片搜索功能');
+        };
+    </script>
+</body>
+</html>

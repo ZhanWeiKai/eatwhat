@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清蒸鲈鱼 - 所有提取的图片</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        h1 { text-align: center; color: #333; }
+        .info { background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card.selected { border: 4px solid #dc3545; box-shadow: 0 0 20px rgba(220, 53, 69, 0.5); }
+        .card img { width: 100%; height: 300px; object-fit: cover; display: block; }
+        .card-number { padding: 10px; font-weight: bold; font-size: 18px; }
+        .selected .card-number { color: #dc3545; }
+        .card-url { padding: 10px; font-size: 11px; color: #666; word-break: break-all; line-height: 1.4; }
+        .error { padding: 20px; color: red; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>清蒸鲈鱼菜谱 - 百度图片搜索结果</h1>
+
+    <div class="info">
+        <strong>搜索关键词：</strong>清蒸鲈鱼菜谱<br>
+        <strong>百度搜索链接：</strong><a href="https://image.baidu.com/search/index?tn=baiduimage&fm=result&ie=utf-8&word=%E6%B8%85%E8%92%B8%E9%B2%88%E9%B1%BC%E8%8F%9C%E8%B0%B1" target="_blank">点击查看百度搜索结果</a>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <script>
+        // 从服务器日志中提取到的10个URL
+        const urls = [
+            'https://img1.baidu.com/it/u=734564085,553305609&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1750',
+            'https://img0.baidu.com/it/u=3637406101,1508991953&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=1094',
+            'https://img0.baidu.com/it/u=2184222232,4287470986&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=774',
+            'https://img1.baidu.com/it/u=2648518329,3664702830&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
+            'https://img2.baidu.com/it/u/3625066111,1156995661&fm=253&fmt=auto&app=138&f=PNG?w=346&h=500',
+            'https://img2.baidu.com/it/u=3678927726,2968840580&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1567',
+            'https://img1.baidu.com/it/u=3922548547,1400128852&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=979',
+            'https://img0.baidu.com/it/u=3897170419,3042490118&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
+            'https://img2.baidu.com/it/u=3684827025,1272425011&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
+            'https://img0.baidu.com/it/u=1495993195,3288101142&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+        ];
+
+        // AI选择的URL（序号5，索引4）
+        const selectedUrl = urls[4];
+
+        const grid = document.getElementById('grid');
+
+        urls.forEach((url, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            if (url === selectedUrl) {
+                card.classList.add('selected');
+            }
+
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = `图片 ${index + 1}`;
+
+            img.onerror = function() {
+                this.style.display = 'none';
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.textContent = '图片加载失败';
+                card.insertBefore(errorDiv, card.firstChild);
+            };
+
+            const numberDiv = document.createElement('div');
+            numberDiv.className = 'card-number';
+            numberDiv.textContent = url === selectedUrl
+                ? `🔴 序号 ${index + 1} - AI选择`
+                : `序号 ${index + 1}`;
+
+            const urlDiv = document.createElement('div');
+            urlDiv.className = 'card-url';
+            urlDiv.textContent = url;
+
+            card.appendChild(img);
+            card.appendChild(numberDiv);
+            card.appendChild(urlDiv);
+            grid.appendChild(card);
+
+            console.log(`图片 ${index + 1}:`, url);
+        });
+    </script>
+</body>
+</html>

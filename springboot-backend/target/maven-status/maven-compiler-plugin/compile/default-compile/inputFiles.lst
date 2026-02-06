@@ -17,11 +17,14 @@ C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\Zhip
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\controller\DishController.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\config\ZhipuAIConfig.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\repository\PhotoRepository.java
+C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\AIDishRequest.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\entity\Push.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\entity\Dish.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\controller\AIController.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\config\WebConfig.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\service\FriendService.java
+C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\enums\SSEMsgType.java
+C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\utils\BaiduImageParser.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\service\DishService.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\entity\DishCategory.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\repository\DishRepository.java
@@ -40,9 +43,11 @@ C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\controll
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\request\RegisterRequest.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\request\LoginRequest.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\config\CorsConfig.java
+C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\controller\SSEController.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\What2EatApplication.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\ZhipuAIRequest.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\util\JwtUtil.java
+C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\utils\SSEServer.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\repository\UserRepository.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\PhotoDTO.java
 C:\claude-project\eatwhat\springboot-backend\src\main\java\com\what2eat\dto\response\ApiResponse.java

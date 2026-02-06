@@ -3703,6 +3703,7 @@ id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
 id webView
+id webview
 id west
 id withText
 id with_icon
@@ -3840,6 +3841,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_ai_chat
+layout activity_ai_chat_webview
 layout activity_baidu_oauth
 layout activity_category_manage
 layout activity_friend_list

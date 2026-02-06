@@ -30,6 +30,9 @@ public class Dish {
     @Column(length = 200)
     private String description;
 
+    @Column(columnDefinition = "TEXT")
+    private String cookingInstructions;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 

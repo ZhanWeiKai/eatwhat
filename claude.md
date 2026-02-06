@@ -93,6 +93,7 @@ sleep 8
 
 **服务器信息**：
 - 服务器IP: `47.83.126.42`
+- 主机名: `iZj6cde83qctem16sr1mjrZ`（阿里云ECS）
 - 用户名: `root`
 - 项目目录: `/root/what2eat`
 - Docker Compose文件: `/root/what2eat/docker-compose.yml`
@@ -100,9 +101,20 @@ sleep 8
 
 **SSH KEY认证**：
 - ✅ 已配置SSH KEY认证，无需输入密码
+- 本地私钥路径: `~/.ssh/id_rsa`
 - 本地公钥路径: `~/.ssh/id_rsa.pub`
-- 服务器授权文件: `~/.ssh/authorized_keys`
+- 服务器授权文件: `/root/.ssh/authorized_keys`
 - 所有SSH操作自动执行，参考 `deploy-xiaozhi` skill配置方法
+
+**SSH连接测试**：
+```bash
+# 测试SSH连接
+ssh root@47.83.126.42 "hostname && whoami"
+
+# 预期输出：
+# iZj6cde83qctem16sr1mjrZ
+# root
+```
 
 #### 步骤5：验证服务器部署
 ```bash

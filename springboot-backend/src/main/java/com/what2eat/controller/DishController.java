@@ -1,5 +1,6 @@
 package com.what2eat.controller;
 
+import com.what2eat.dto.AIDishRequest;
 import com.what2eat.dto.response.ApiResponse;
 import com.what2eat.entity.Dish;
 import com.what2eat.service.DishService;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -104,6 +106,32 @@ public class DishController {
     public ApiResponse<List<String>> getAllCategories() {
         try {
             return ApiResponse.success(dishService.getAllCategories());
+        } catch (Exception e) {
+            return ApiResponse.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 从AI推荐添加菜品
+     */
+    @Operation(summary = "从AI推荐添加菜品")
+    @PostMapping("/add-from-ai")
+    public ApiResponse<Dish> addDishFromAI(
+            @RequestBody AIDishRequest request,
+            @RequestHeader("Authorization") String authorization) {
+        try {
+            String token = authorization.replace("Bearer ", "");
+            String userId = userService.validateTokenAndGetUser(token).getUserId();
+
+            // 创建菜品对象
+            Dish dish = new Dish();
+            dish.setName(request.getDishName());
+            dish.setCategory(request.getCategory());
+            dish.setCookingInstructions(request.getCookingMethod());
+            dish.setDescription(request.getDishName()); // 使用菜品名作为描述
+            dish.setPrice(BigDecimal.ZERO); // AI推荐的菜品默认价格为0
+
+            return ApiResponse.success("添加成功", dishService.createDish(dish, userId));
         } catch (Exception e) {
             return ApiResponse.error(e.getMessage());
         }

@@ -128,7 +128,9 @@ id tvUserId
 id uploadPlaceholder
 id viewPagerPhoto
 id webView
+id webview
 layout activity_ai_chat
+layout activity_ai_chat_webview
 layout activity_baidu_oauth
 layout activity_category_manage
 layout activity_friend_list

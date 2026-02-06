@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>步骤1: 测试AI生成搜索关键词</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .test-item { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .input-group { margin: 10px 0; }
+        input[type="text"] { padding: 8px; width: 300px; font-size: 14px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px; white-space: pre-wrap; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; }
+        h1 { color: #333; }
+        h2 { color: #666; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h1>步骤1: 测试AI生成搜索关键词</h1>
+
+    <div class="test-item">
+        <h3>测试用户查询 → AI生成关键词</h3>
+        <div class="input-group">
+            <input type="text" id="userQuery" placeholder="输入菜品名称，如：红烧肉" value="红烧肉">
+            <button onclick="testKeywords()">测试生成关键词</button>
+        </div>
+        <div id="result" class="result">等待测试...</div>
+    </div>
+
+    <div class="test-item">
+        <h3>批量测试多个菜品</h3>
+        <button onclick="batchTest()">批量测试（红烧肉、宫保鸡丁、鱼香肉丝）</button>
+        <div id="batchResult" class="result">等待批量测试...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://api.jamesweb.org:8883/api';
+
+        async function testKeywords() {
+            const query = document.getElementById('userQuery').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (!query) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请输入查询内容';
+                return;
+            }
+
+            resultDiv.className = 'result';
+            resultDiv.textContent = '正在测试...';
+
+            try {
+                // 步骤1: 调用图片搜索API，看AI生成的关键词
+                console.log('测试查询:', query);
+
+                const response = await fetch(`${API_BASE}/image/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                const data = await response.json();
+                console.log('API响应:', data);
+
+                if (data.code === 200) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ 成功！
+查询: ${data.data.query || query}
+返回图片URL: ${data.data.imageUrl}
+
+注意：这个测试验证了后端能否成功生成关键词并返回图片URL。
+我们需要查看服务器日志来确认AI生成的关键词是什么。`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ 失败！
+错误码: ${data.code}
+错误信息: ${data.message}`;
+                }
+
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ 请求失败！
+错误信息: ${error.message}`;
+                console.error('详细错误:', error);
+            }
+        }
+
+        async function batchTest() {
+            const batchResultDiv = document.getElementById('batchResult');
+            const queries = ['红烧肉', '宫保鸡丁', '鱼香肉丝'];
+
+            batchResultDiv.className = 'result';
+            batchResultDiv.textContent = '正在批量测试...\n';
+
+            const results = [];
+
+            for (const query of queries) {
+                try {
+                    const response = await fetch(`${API_BASE}/image/search`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ query: query })
+                    });
+
+                    const data = await response.json();
+                    results.push({
+                        query: query,
+                        success: data.code === 200,
+                        imageUrl: data.data?.imageUrl || '无',
+                        message: data.message
+                    });
+
+                } catch (error) {
+                    results.push({
+                        query: query,
+                        success: false,
+                        imageUrl: '请求失败',
+                        message: error.message
+                    });
+                }
+            }
+
+            // 显示结果
+            let output = '批量测试结果：\n\n';
+            results.forEach((r, i) => {
+                output += `${i + 1}. ${r.query}\n`;
+                output += `   状态: ${r.success ? '✅ 成功' : '❌ 失败'}\n`;
+                output += `   图片URL: ${r.imageUrl}\n`;
+                output += `   信息: ${r.message}\n\n`;
+            });
+
+            batchResultDiv.textContent = output;
+            batchResultDiv.className = results.every(r => r.success) ? 'result success' : 'result error';
+        }
+
+        // 页面加载时自动测试一次
+        window.onload = function() {
+            console.log('页面加载完成，准备测试');
+        };
+    </script>
+</body>
+</html>

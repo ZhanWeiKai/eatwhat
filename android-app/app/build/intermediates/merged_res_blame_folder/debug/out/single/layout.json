@@ -92,6 +92,10 @@
         "source": "com.what2eat.app-main-37:/layout/item_category.xml"
     },
     {
+        "merged": "com.what2eat.app-mergeDebugResources-34:/layout/activity_ai_chat_webview.xml",
+        "source": "com.what2eat.app-main-37:/layout/activity_ai_chat_webview.xml"
+    },
+    {
         "merged": "com.what2eat.app-mergeDebugResources-34:/layout/item_chat_message_ai.xml",
         "source": "com.what2eat.app-main-37:/layout/item_chat_message_ai.xml"
     },
