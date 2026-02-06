@@ -447,33 +447,41 @@
         function simulateTypewriter(text) {
             console.log('开始打字机效果，文本长度:', text.length);
 
-            // 尝试解析JSON
+            // 尝试从Markdown中解析菜品数据
             try {
-                console.log('尝试解析AI返回的JSON:', text);
-                const jsonData = JSON.parse(text);
+                console.log('尝试从Markdown中解析菜品数据');
 
-                if (jsonData.dishName && jsonData.category && jsonData.cookingMethod) {
-                    console.log('解析成功，菜品数据:', jsonData);
-                    currentDishData = jsonData;
+                // 提取菜品名称
+                const dishNameMatch = text.match(/\*\*菜品名称[：:]\s*(.+?)\*\*/);
+                const dishName = dishNameMatch ? dishNameMatch[1].trim() : null;
 
-                    // 构建Markdown格式的显示文本
-                    const markdownText = `**推荐菜品：${jsonData.dishName}**
+                // 提取菜品分类
+                const categoryMatch = text.match(/\*\*菜品分类[：:]\s*(.+?)\*\*/);
+                const category = categoryMatch ? categoryMatch[1].trim() : null;
 
-**分类**：${jsonData.category}
+                // 提取做法（从**做法：**或**做法**之后开始）
+                const cookingMatch = text.match(/\*\*做法[：:]?\*\*\s*([\s\S]+)/);
+                const cookingMethod = cookingMatch ? cookingMatch[1].trim() : null;
 
-**做法**：
-${jsonData.cookingMethod.replace(/\\n/g, '\n')}`;
+                console.log('解析结果:', { dishName, category, cookingMethod });
 
-                    // 使用Markdown文本进行打字机效果
-                    typeMarkdown(markdownText);
-                    return;
+                if (dishName && category && cookingMethod) {
+                    currentDishData = {
+                        dishName: dishName,
+                        category: category,
+                        cookingMethod: cookingMethod
+                    };
+                    console.log('菜品数据解析成功:', currentDishData);
+                } else {
+                    currentDishData = null;
+                    console.log('菜品数据解析失败，不显示添加按钮');
                 }
             } catch (e) {
-                console.log('不是JSON格式，使用普通Markdown渲染:', e);
+                console.log('解析失败:', e);
                 currentDishData = null;
             }
 
-            // 如果不是JSON，直接渲染
+            // 使用Markdown文本进行打字机效果
             typeMarkdown(text);
         }
 
